@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drivora - Premium Personal Mobility</title>
+    <title>Drivora - Premium Personal Mobility Professionals</title>
     <style>
         * {
             margin: 0;
@@ -23,6 +23,8 @@
             --text-dark: #ffffff;
             --text-light: #1a1a1a;
             --accent: #d4af37;
+            --success: #4ade80;
+            --warning: #f59e0b;
         }
 
         body {
@@ -115,7 +117,7 @@
         }
 
         .hero {
-            min-height: 100vh;
+            min-height: 70vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -129,7 +131,7 @@
         }
 
         .hero h1 {
-            font-size: clamp(32px, 8vw, 72px);
+            font-size: clamp(32px, 8vw, 56px);
             font-weight: 700;
             line-height: 1.2;
             margin-bottom: 24px;
@@ -184,8 +186,30 @@
             color: #000;
         }
 
+        .btn-filter {
+            padding: 8px 16px;
+            border: 1px solid var(--dark-border);
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            color: inherit;
+        }
+
+        body.light-mode .btn-filter {
+            border-color: var(--light-border);
+        }
+
+        .btn-filter:hover,
+        .btn-filter.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #000;
+        }
+
         section {
-            padding: 80px 20px;
+            padding: 60px 20px;
             border-top: 1px solid var(--dark-border);
         }
 
@@ -194,9 +218,9 @@
         }
 
         section h2 {
-            font-size: clamp(32px, 6vw, 48px);
+            font-size: clamp(28px, 6vw, 44px);
             font-weight: 700;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             text-align: center;
         }
 
@@ -207,108 +231,139 @@
             background-clip: text;
         }
 
-        .cards-grid {
+        .filter-section {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .professionals-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 24px;
             margin-top: 40px;
         }
 
-        .card {
+        .professional-card {
             background: var(--dark-card);
             border: 1px solid var(--dark-border);
             border-radius: 16px;
-            padding: 32px;
+            padding: 20px;
             transition: all 0.3s ease;
             cursor: pointer;
         }
 
-        body.light-mode .card {
+        body.light-mode .professional-card {
             background: var(--light-card);
             border-color: var(--light-border);
         }
 
-        .card:hover {
+        .professional-card:hover {
             transform: translateY(-8px);
             border-color: var(--primary);
             box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
         }
 
-        .card-icon {
-            font-size: 40px;
+        .professional-header {
+            display: flex;
+            gap: 16px;
             margin-bottom: 16px;
         }
 
-        .card h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        .card p {
-            opacity: 0.7;
-            line-height: 1.6;
-        }
-
-        .expert-profile {
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        body.light-mode .expert-profile {
-            background: var(--light-card);
-            border-color: var(--light-border);
-        }
-
-        .expert-profile:hover {
-            transform: translateY(-4px);
-            border-color: var(--primary);
-        }
-
-        .expert-avatar {
-            width: 100px;
-            height: 100px;
+        .professional-avatar {
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            margin: 0 auto 16px;
             border: 3px solid var(--primary);
             object-fit: cover;
+            flex-shrink: 0;
         }
 
-        .expert-name {
+        .professional-info {
+            flex: 1;
+        }
+
+        .professional-name {
             font-size: 18px;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
-        .expert-rating {
+        .professional-rating {
             display: flex;
-            justify-content: center;
-            gap: 4px;
-            margin-bottom: 12px;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
         }
 
-        .expert-bio {
-            opacity: 0.7;
+        .stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .star {
+            color: var(--primary);
             font-size: 14px;
-            margin-bottom: 16px;
+        }
+
+        .rating-value {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--success);
+            background: rgba(74, 222, 128, 0.1);
+            padding: 4px 8px;
+            border-radius: 12px;
+            margin-top: 4px;
+        }
+
+        .professional-bio {
+            font-size: 14px;
+            opacity: 0.7;
             line-height: 1.5;
-        }
-
-        .expert-stats {
-            display: flex;
-            justify-content: space-around;
-            padding: 16px 0;
-            border-top: 1px solid var(--dark-border);
+            margin-bottom: 16px;
+            padding-bottom: 16px;
             border-bottom: 1px solid var(--dark-border);
-            margin: 16px 0;
         }
 
-        body.light-mode .expert-stats {
-            border-top-color: var(--light-border);
+        body.light-mode .professional-bio {
+            border-bottom-color: var(--light-border);
+        }
+
+        .specializations {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .spec-tag {
+            font-size: 12px;
+            padding: 4px 10px;
+            background: var(--primary);
+            color: #000;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .professional-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        body.light-mode .professional-stats {
             border-bottom-color: var(--light-border);
         }
 
@@ -317,61 +372,85 @@
         }
 
         .stat-value {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--primary);
         }
 
         .stat-label {
+            font-size: 11px;
+            opacity: 0.6;
+            margin-top: 2px;
+        }
+
+        .nps-score {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nps-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nps-label {
+            font-size: 11px;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nps-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nps-status {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        .professional-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .price-label {
             font-size: 12px;
             opacity: 0.6;
-            margin-top: 4px;
         }
 
-        .floating-nav {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 200;
-            background: rgba(26, 31, 58, 0.95);
-            border: 1px solid var(--dark-border);
-            border-radius: 50px;
-            padding: 12px 24px;
-            backdrop-filter: blur(20px);
-            display: flex;
-            gap: 8px;
-            transition: all 0.3s ease;
+        .price-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
         }
 
-        body.light-mode .floating-nav {
-            background: rgba(255, 255, 255, 0.95);
-            border-color: var(--light-border);
-        }
-
-        .nav-item {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .book-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: transparent;
-            border: none;
-            color: inherit;
-            font-size: 20px;
         }
 
-        .nav-item:hover {
-            background: var(--primary);
-            color: #000;
-        }
-
-        .nav-item.active {
-            background: var(--primary);
-            color: #000;
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
         }
 
         .modal {
@@ -425,44 +504,121 @@
             color: inherit;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        .modal-header {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 24px;
+            clear: both;
         }
 
-        .form-group label {
-            display: block;
+        .modal-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .modal-info h2 {
+            font-size: 24px;
+            font-weight: 700;
             margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 14px;
         }
 
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--dark-border);
-            border-radius: 8px;
+        .modal-info .verified-badge {
+            margin-top: 8px;
+        }
+
+        .modal-section {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        body.light-mode .modal-section {
+            border-bottom-color: var(--light-border);
+        }
+
+        .modal-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .modal-section p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .experience-item {
             background: var(--dark-bg);
-            color: var(--text-dark);
-            font-size: 14px;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        body.light-mode .experience-item {
+            background: var(--light-bg);
+        }
+
+        .experience-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .experience-label {
+            font-size: 12px;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
+
+        .floating-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 200;
+            background: rgba(26, 31, 58, 0.95);
+            border: 1px solid var(--dark-border);
+            border-radius: 50px;
+            padding: 12px 24px;
+            backdrop-filter: blur(20px);
+            display: flex;
+            gap: 8px;
             transition: all 0.3s ease;
         }
 
-        body.light-mode .form-group input,
-        body.light-mode .form-group select,
-        body.light-mode .form-group textarea {
-            background: var(--light-bg);
-            color: var(--text-light);
+        body.light-mode .floating-nav {
+            background: rgba(255, 255, 255, 0.95);
             border-color: var(--light-border);
         }
 
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        .nav-item {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+            border: none;
+            color: inherit;
+            font-size: 20px;
+        }
+
+        .nav-item:hover {
+            background: var(--primary);
+            color: #000;
         }
 
         footer {
@@ -479,20 +635,14 @@
         }
 
         @media (max-width: 768px) {
-            .cards-grid {
+            .professionals-grid {
                 grid-template-columns: 1fr;
             }
 
-            .cta-buttons {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            section {
-                padding: 60px 20px;
+            .filter-section {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 8px;
             }
 
             .floating-nav {
@@ -506,9 +656,17 @@
                 height: 40px;
                 font-size: 18px;
             }
-        }
 
-        .mt-40 { margin-top: 40px; }
+            .modal-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .experience-grid {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -526,118 +684,27 @@
     <main>
         <section class="hero">
             <div class="container">
-                <h1>Your Journey,<br><span class="accent-text">Your Comfort</span></h1>
-                <p>Premium personal mobility at your fingertips. Trusted specialists, verified expertise, seamless experience.</p>
+                <h1>Meet Our <span class="accent-text">Mobility Professionals</span></h1>
+                <p>Trusted chauffeurs and driving specialists dedicated to your safe, comfortable journey.</p>
                 <div class="cta-buttons">
-                    <button class="btn btn-primary" onclick="showModal('book')">Book Now</button>
-                    <button class="btn btn-secondary" onclick="showModal('experts')">Meet Specialists</button>
+                    <button class="btn btn-primary" onclick="scrollToExperts()">Browse Professionals</button>
                 </div>
             </div>
         </section>
 
-        <section>
+        <section id="professionals-section">
             <div class="container">
-                <h2>Why Choose <span class="accent-text">Drivora</span></h2>
-                <div class="cards-grid">
-                    <div class="card">
-                        <div class="card-icon">✓</div>
-                        <h3>Verified Specialists</h3>
-                        <p>Every professional is thoroughly vetted, licensed, and background-checked for complete peace of mind.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">⭐</div>
-                        <h3>Rated & Trusted</h3>
-                        <p>Real ratings from real passengers. Transparent performance metrics ensure quality service every time.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">🔒</div>
-                        <h3>Your Safety First</h3>
-                        <p>Live tracking, emergency support, and insurance coverage on every journey for complete protection.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">💎</div>
-                        <h3>Premium Experience</h3>
-                        <p>Professional service with attention to detail. Every journey is smooth, comfortable, and reliable.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">⏱️</div>
-                        <h3>On-Demand Availability</h3>
-                        <p>Book instantly or schedule in advance. Specialists available when needed, where needed.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">💰</div>
-                        <h3>Transparent Pricing</h3>
-                        <p>No hidden charges. Fixed rates, instant quotes, and flexible payment options for convenience.</p>
-                    </div>
+                <h2>Our <span class="accent-text">Trusted Professionals</span></h2>
+                
+                <div class="filter-section">
+                    <button class="btn-filter active" onclick="filterProfessionals('all')">All</button>
+                    <button class="btn-filter" onclick="filterProfessionals('available')">Available Now</button>
+                    <button class="btn-filter" onclick="filterProfessionals('trusted')">Highly Trusted</button>
+                    <button class="btn-filter" onclick="filterProfessionals('highway')">Highway Specialists</button>
+                    <button class="btn-filter" onclick="filterProfessionals('night')">Night Specialists</button>
                 </div>
-            </div>
-        </section>
 
-        <section id="experts-section">
-            <div class="container">
-                <h2>Meet Our <span class="accent-text">Specialists</span></h2>
-                <div class="cards-grid" id="experts-grid"></div>
-            </div>
-        </section>
-
-        <section>
-            <div class="container">
-                <h2>How It <span class="accent-text">Works</span></h2>
-                <div class="cards-grid">
-                    <div class="card">
-                        <div class="card-icon">1️⃣</div>
-                        <h3>Tell Us What You Need</h3>
-                        <p>Share your location, time, and preferences. Specify your vehicle type and journey details.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">2️⃣</div>
-                        <h3>Choose Your Specialist</h3>
-                        <p>Browse verified professionals with ratings, experience, and specializations. Pick the perfect match.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">3️⃣</div>
-                        <h3>Enjoy the Journey</h3>
-                        <p>Sit back and relax. Track in real-time, communicate directly, and rate the experience afterward.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div class="container">
-                <h2>Our <span class="accent-text">Services</span></h2>
-                <div class="cards-grid">
-                    <div class="card">
-                        <div class="card-icon">🏙️</div>
-                        <h3>City Commute</h3>
-                        <p>Daily commuting with professional specialists who know every route and traffic pattern.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">🛣️</div>
-                        <h3>Long Distance</h3>
-                        <p>Multi-city journeys with experienced specialists trained for highway safety and comfort.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">🌙</div>
-                        <h3>Night Travel</h3>
-                        <p>Safe, reliable specialists for evening and night journeys with extra safety protocols.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">🎉</div>
-                        <h3>Event Transport</h3>
-                        <p>Professional specialists for weddings, corporate events, and special occasions.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">✈️</div>
-                        <h3>Airport Transfers</h3>
-                        <p>Reliable airport pickups and drop-offs with real-time flight tracking.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">💼</div>
-                        <h3>Corporate Travel</h3>
-                        <p>Professional mobility solutions for business travel and corporate needs.</p>
-                    </div>
-                </div>
+                <div class="professionals-grid" id="professionals-grid"></div>
             </div>
         </section>
     </main>
@@ -648,115 +715,125 @@
         </div>
     </footer>
 
-    <div class="modal" id="bookModal">
+    <div class="modal" id="professionalModal">
         <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('book')">&times;</button>
-            <h2>Book Your Journey</h2>
-            <form class="mt-40">
-                <div class="form-group">
-                    <label>Pickup Location</label>
-                    <input type="text" placeholder="Enter your location">
-                </div>
-                <div class="form-group">
-                    <label>Destination</label>
-                    <input type="text" placeholder="Where are you going?">
-                </div>
-                <div class="form-group">
-                    <label>Date</label>
-                    <input type="date">
-                </div>
-                <div class="form-group">
-                    <label>Time</label>
-                    <input type="time">
-                </div>
-                <div class="form-group">
-                    <label>Vehicle Type</label>
-                    <select>
-                        <option>Sedan</option>
-                        <option>SUV</option>
-                        <option>Luxury Sedan</option>
-                        <option>Premium SUV</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Service Type</label>
-                    <select>
-                        <option>One-way</option>
-                        <option>Round Trip</option>
-                        <option>Hourly</option>
-                        <option>Full Day</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Confirm Booking</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="modal" id="expertsModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('experts')">&times;</button>
-            <h2>Meet Our Specialists</h2>
-            <div class="cards-grid mt-40" id="experts-modal-grid"></div>
-        </div>
-    </div>
-
-    <div class="modal" id="servicesModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('services')">&times;</button>
-            <h2>Our Services</h2>
-            <div class="cards-grid mt-40">
-                <div class="card">
-                    <div class="card-icon">🏙️</div>
-                    <h3>City Commute</h3>
-                    <p>Daily commuting with professional specialists who know every route.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🛣️</div>
-                    <h3>Long Distance</h3>
-                    <p>Multi-city journeys with experienced specialists trained for highway safety.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🌙</div>
-                    <h3>Night Travel</h3>
-                    <p>Safe, reliable specialists for evening and night journeys.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="profileModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('profile')">&times;</button>
-            <h2>Your Profile</h2>
-            <form class="mt-40">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" placeholder="Your name">
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" placeholder="your@email.com">
-                </div>
-                <div class="form-group">
-                    <label>Phone</label>
-                    <input type="tel" placeholder="+91 XXXXX XXXXX">
-                </div>
-                <div class="form-group">
-                    <label>Preferred Vehicle</label>
-                    <select>
-                        <option>Sedan</option>
-                        <option>SUV</option>
-                        <option>Luxury Sedan</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Save Profile</button>
-            </form>
+            <button class="modal-close" onclick="closeProfessionalModal()">&times;</button>
+            <div class="modal-header" id="modalHeader"></div>
+            
+            <div class="modal-section" id="bioSection"></div>
+            <div class="modal-section" id="statsSection"></div>
+            <div class="modal-section" id="experienceSection"></div>
+            <div class="modal-section" id="specializationsSection"></div>
+            
+            <button class="btn btn-primary" style="width: 100%; padding: 14px;" onclick="bookProfessional()">Book This Professional</button>
         </div>
     </div>
 
     <div class="floating-nav" id="floatingNav"></div>
 
     <script>
+        const professionals = [
+            {
+                id: 1,
+                name: 'Arjun Krishnan',
+                rating: 4.95,
+                trips: 2400,
+                experience: 12,
+                kmDriven: 185000,
+                citiesCovered: ['Chennai', 'Bangalore', 'Coimbatore', 'Madurai', 'Kanyakumari'],
+                bio: 'Focused on safe and smooth journeys. Known for patience, respect, and careful handling in both city and highway travel. Specialized in long-distance comfort.',
+                specializations: ['Highway Specialist', 'Long Distance Expert', 'Family Travel Safe'],
+                npsScore: 92,
+                npsLabel: 'Highly Trusted',
+                hourlyRate: 120,
+                available: true,
+                avatar: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23d4af37"/%3E%3Ctext x="50" y="50" text-anchor="middle" dy=".3em" font-size="40" fill="white"%3EAK%3C/text%3E%3C/svg%3E'
+            },
+            {
+                id: 2,
+                name: 'Priya Iyer',
+                rating: 4.88,
+                trips: 1950,
+                experience: 10,
+                kmDriven: 142000,
+                citiesCovered: ['Chennai', 'Bangalore', 'Mysore', 'Tirupati'],
+                bio: 'Expert in city navigation with smooth, defensive driving. Committed to passenger comfort and safety. Excellent with corporate clients and families.',
+                specializations: ['City Navigation Expert', 'Corporate Travel', 'Family Travel Safe'],
+                npsScore: 88,
+                npsLabel: 'Highly Trusted',
+                hourlyRate: 110,
+                available: true,
+                avatar: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23d4af37"/%3E%3Ctext x="50" y="50" text-anchor="middle" dy=".3em" font-size="40" fill="white"%3EPI%3C/text%3E%3C/svg%3E'
+            },
+            {
+                id: 3,
+                name: 'Karthik Menon',
+                rating: 4.92,
+                trips: 2100,
+                experience: 11,
+                kmDriven: 165000,
+                citiesCovered: ['Chennai', 'Bangalore', 'Ooty', 'Coonoor', 'Kodaikanal'],
+                bio: 'Night travel specialist with exceptional focus and alertness. Trained in defensive driving and emergency response. Your safety is my priority.',
+                specializations: ['Night Travel Expert', 'Highway Specialist', 'Emergency Response'],
+                npsScore: 90,
+                npsLabel: 'Highly Trusted',
+                hourlyRate: 115,
+                available: false,
+                avatar: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23d4af37"/%3E%3Ctext x="50" y="50" text-anchor="middle" dy=".3em" font-size="40" fill="white"%3EKM%3C/text%3E%3C/svg%3E'
+            },
+            {
+                id: 4,
+                name: 'Deepa Sharma',
+                rating: 4.85,
+                trips: 1680,
+                experience: 9,
+                kmDriven: 128000,
+                citiesCovered: ['Chennai', 'Vellore', 'Kanchipuram', 'Tirupati'],
+                bio: 'Professional chauffeur with meticulous attention to detail. Excellent communication skills and punctuality. Trusted by corporate executives and families.',
+                specializations: ['Corporate Travel', 'City Navigation Expert', 'Family Travel Safe'],
+                npsScore: 85,
+                npsLabel: 'Trusted',
+                hourlyRate: 105,
+                available: true,
+                avatar: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23d4af37"/%3E%3Ctext x="50" y="50" text-anchor="middle" dy=".3em" font-size="40" fill="white"%3EDS%3C/text%3E%3C/svg%3E'
+            },
+            {
+                id: 5,
+                name: 'Rajesh Pandey',
+                rating: 4.90,
+                trips: 2250,
+                experience: 13,
+                kmDriven: 175000,
+                citiesCovered: ['Chennai', 'Bangalore', 'Hyderabad', 'Coimbatore', 'Salem'],
+                bio: 'Experienced highway specialist with impeccable safety record. Calm demeanor and professional approach. Ideal for long-distance corporate travel.',
+                specializations: ['Highway Specialist', 'Long Distance Expert', 'Corporate Travel'],
+                npsScore: 91,
+                npsLabel: 'Highly Trusted',
+                hourlyRate: 125,
+                available: true,
+                avatar: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23d4af37"/%3E%3Ctext x="50" y="50" text-anchor="middle" dy=".3em" font-size="40" fill="white"%3ERP%3C/text%3E%3C/svg%3E'
+            },
+            {
+                id: 6,
+                name: 'Anjali Nair',
+                rating: 4.87,
+                trips: 1820,
+                experience: 8,
+                kmDriven: 135000,
+                citiesCovered: ['Chennai', 'Bangalore', 'Pondicherry', 'Tirupati'],
+                bio: 'Dedicated to providing comfortable and safe journeys. Known for courteous behavior and reliability. Perfect for family outings and daily commutes.',
+                specializations: ['Family Travel Safe', 'City Navigation Expert', 'Night Travel Expert'],
+                npsScore: 87,
+                npsLabel: 'Highly Trusted',
+                hourlyRate: 100,
+                available: true,
+                avatar: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23d4af37"/%3E%3Ctext x="50" y="50" text-anchor="middle" dy=".3em" font-size="40" fill="white"%3EAN%3C/text%3E%3C/svg%3E'
+            }
+        ];
+
+        let currentFilter = 'all';
+        let selectedProfessional = null;
+
         const themeToggle = document.getElementById('themeToggle');
         const savedTheme = localStorage.getItem('theme') || 'dark';
         if (savedTheme === 'light') {
@@ -771,103 +848,182 @@
             localStorage.setItem('theme', currentTheme);
         });
 
-        const experts = [
-            {
-                name: 'Rajesh Kumar',
-                rating: 4.9,
-                trips: 2100,
-                experience: 11,
-                bio: 'Highway specialist with 11 years of experience. Certified professional with zero incidents.',
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23d4af37"/%3E%3Ctext x="50" y="50" text-anchor="middle" dy=".3em" font-size="40" fill="white"%3ERK%3C/text%3E%3C/svg%3E'
-            },
-            {
-                name: 'Priya Sharma',
-                rating: 4.8,
-                trips: 1850,
-                experience: 9,
-                bio: 'City navigation expert. Smooth driving with premium service standards.',
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23d4af37"/%3E%3Ctext x="50" y="50" text-anchor="middle" dy=".3em" font-size="40" fill="white"%3EPS%3C/text%3E%3C/svg%3E'
-            },
-            {
-                name: 'Arjun Menon',
-                rating: 4.85,
-                trips: 1650,
-                experience: 8,
-                bio: 'Night travel specialist. Focused on safety and comfort during evening journeys.',
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23d4af37"/%3E%3Ctext x="50" y="50" text-anchor="middle" dy=".3em" font-size="40" fill="white"%3EAM%3C/text%3E%3C/svg%3E'
-            },
-            {
-                name: 'Deepa Iyer',
-                rating: 4.75,
-                trips: 1420,
-                experience: 7,
-                bio: 'Corporate travel specialist. Professional demeanor with attention to detail.',
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23d4af37"/%3E%3Ctext x="50" y="50" text-anchor="middle" dy=".3em" font-size="40" fill="white"%3EDI%3C/text%3E%3C/svg%3E'
-            }
-        ];
+        function filterProfessionals(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.btn-filter').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderProfessionals();
+        }
 
-        function populateExperts() {
-            const grid = document.getElementById('experts-grid');
-            const modalGrid = document.getElementById('experts-modal-grid');
-            
-            const expertHTML = experts.map(expert => `
-                <div class="expert-profile">
-                    <img src="${expert.image}" alt="${expert.name}" class="expert-avatar">
-                    <div class="expert-name">${expert.name}</div>
-                    <div class="expert-rating">${'⭐'.repeat(Math.floor(expert.rating))}</div>
-                    <div class="expert-bio">${expert.bio}</div>
-                    <div class="expert-stats">
+        function getFilteredProfessionals() {
+            return professionals.filter(p => {
+                if (currentFilter === 'all') return true;
+                if (currentFilter === 'available') return p.available;
+                if (currentFilter === 'trusted') return p.npsScore >= 85;
+                if (currentFilter === 'highway') return p.specializations.includes('Highway Specialist');
+                if (currentFilter === 'night') return p.specializations.includes('Night Travel Expert');
+                return true;
+            });
+        }
+
+        function renderProfessionals() {
+            const grid = document.getElementById('professionals-grid');
+            const filtered = getFilteredProfessionals();
+
+            grid.innerHTML = filtered.map(p => `
+                <div class="professional-card" onclick="openProfessionalModal(${p.id})">
+                    <div class="professional-header">
+                        <img src="${p.avatar}" alt="${p.name}" class="professional-avatar">
+                        <div class="professional-info">
+                            <div class="professional-name">${p.name}</div>
+                            <div class="professional-rating">
+                                <div class="stars">${'⭐'.repeat(Math.floor(p.rating))}</div>
+                                <span class="rating-value">${p.rating}</span>
+                            </div>
+                            <div class="verified-badge">✓ Verified Professional</div>
+                            ${!p.available ? '<div style="color: #f59e0b; font-size: 12px; margin-top: 4px;">Currently Busy</div>' : ''}
+                        </div>
+                    </div>
+
+                    <div class="professional-bio">"${p.bio}"</div>
+
+                    <div class="specializations">
+                        ${p.specializations.map(s => `<span class="spec-tag">${s}</span>`).join('')}
+                    </div>
+
+                    <div class="professional-stats">
                         <div class="stat">
-                            <div class="stat-value">${expert.trips}+</div>
+                            <div class="stat-value">${p.trips}+</div>
                             <div class="stat-label">Journeys</div>
                         </div>
                         <div class="stat">
-                            <div class="stat-value">${expert.experience}yr</div>
+                            <div class="stat-value">${p.experience}yr</div>
                             <div class="stat-label">Experience</div>
                         </div>
-                        <div class="stat">
-                            <div class="stat-value">${expert.rating}</div>
-                            <div class="stat-label">Rating</div>
-                        </div>
                     </div>
-                    <button class="btn btn-primary" style="width: 100%; margin-top: 16px;">Book ${expert.name.split(' ')[0]}</button>
+
+                    <div class="nps-score">
+                        <div class="nps-left">
+                            <div class="nps-label">Trust Score</div>
+                            <div class="nps-value">+${p.npsScore}</div>
+                        </div>
+                        <div class="nps-status">${p.npsLabel}</div>
+                    </div>
+
+                    <div class="professional-price">
+                        <span class="price-label">From</span>
+                        <span class="price-value">₹${p.hourlyRate}/hr</span>
+                    </div>
+
+                    <button class="book-btn">View Profile</button>
                 </div>
             `).join('');
-
-            grid.innerHTML = expertHTML;
-            modalGrid.innerHTML = expertHTML;
         }
 
-        populateExperts();
+        function openProfessionalModal(id) {
+            selectedProfessional = professionals.find(p => p.id === id);
+            if (!selectedProfessional) return;
 
-        function showModal(type) {
-            const modalMap = {
-                'book': 'bookModal',
-                'experts': 'expertsModal',
-                'services': 'servicesModal',
-                'profile': 'profileModal'
-            };
-            const modal = document.getElementById(modalMap[type]);
-            if (modal) modal.classList.add('active');
+            const p = selectedProfessional;
+
+            document.getElementById('modalHeader').innerHTML = `
+                <img src="${p.avatar}" alt="${p.name}" class="modal-avatar">
+                <div class="modal-info">
+                    <h2>${p.name}</h2>
+                    <div class="professional-rating">
+                        <div class="stars">${'⭐'.repeat(Math.floor(p.rating))}</div>
+                        <span class="rating-value">${p.rating}</span>
+                    </div>
+                    <div class="verified-badge">✓ Verified Professional</div>
+                </div>
+            `;
+
+            document.getElementById('bioSection').innerHTML = `
+                <h3>About</h3>
+                <p>${p.bio}</p>
+            `;
+
+            document.getElementById('statsSection').innerHTML = `
+                <h3>Performance Metrics</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+                    <div style="text-align: center; padding: 12px; background: var(--dark-bg); border-radius: 8px;">
+                        <div style="font-size: 18px; font-weight: 700; color: var(--primary);">${p.trips}+</div>
+                        <div style="font-size: 12px; opacity: 0.6; margin-top: 4px;">Journeys</div>
+                    </div>
+                    <div style="text-align: center; padding: 12px; background: var(--dark-bg); border-radius: 8px;">
+                        <div style="font-size: 18px; font-weight: 700; color: var(--primary);">+${p.npsScore}</div>
+                        <div style="font-size: 12px; opacity: 0.6; margin-top: 4px;">NPS Score</div>
+                    </div>
+                    <div style="text-align: center; padding: 12px; background: var(--dark-bg); border-radius: 8px;">
+                        <div style="font-size: 18px; font-weight: 700; color: var(--primary);">${p.rating}</div>
+                        <div style="font-size: 12px; opacity: 0.6; margin-top: 4px;">Rating</div>
+                    </div>
+                </div>
+                <div style="margin-top: 12px; padding: 12px; background: rgba(212, 175, 55, 0.1); border-radius: 8px; border: 1px solid var(--primary);">
+                    <div style="font-size: 14px; font-weight: 600; color: var(--primary);">${p.npsLabel}</div>
+                    <div style="font-size: 12px; opacity: 0.7; margin-top: 4px;">Trust Status</div>
+                </div>
+            `;
+
+            document.getElementById('experienceSection').innerHTML = `
+                <h3>Experience Overview</h3>
+                <div class="experience-grid">
+                    <div class="experience-item">
+                        <div class="experience-value">${p.kmDriven.toLocaleString()}+</div>
+                        <div class="experience-label">Km Driven</div>
+                    </div>
+                    <div class="experience-item">
+                        <div class="experience-value">${p.experience}</div>
+                        <div class="experience-label">Years</div>
+                    </div>
+                    <div class="experience-item">
+                        <div class="experience-value">${p.citiesCovered.length}</div>
+                        <div class="experience-label">Cities</div>
+                    </div>
+                    <div class="experience-item">
+                        <div class="experience-value">₹${p.hourlyRate}</div>
+                        <div class="experience-label">Hourly Rate</div>
+                    </div>
+                </div>
+                <div style="margin-top: 12px;">
+                    <div style="font-size: 12px; opacity: 0.6; margin-bottom: 8px;">Cities Covered</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        ${p.citiesCovered.map(city => `<span style="padding: 6px 12px; background: var(--primary); color: #000; border-radius: 16px; font-size: 12px; font-weight: 600;">${city}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('specializationsSection').innerHTML = `
+                <h3>Specializations</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    ${p.specializations.map(s => `<span class="spec-tag">${s}</span>`).join('')}
+                </div>
+            `;
+
+            document.getElementById('professionalModal').classList.add('active');
         }
 
-        function closeModal(type) {
-            const modalMap = {
-                'book': 'bookModal',
-                'experts': 'expertsModal',
-                'services': 'servicesModal',
-                'profile': 'profileModal'
-            };
-            const modal = document.getElementById(modalMap[type]);
-            if (modal) modal.classList.remove('active');
+        function closeProfessionalModal() {
+            document.getElementById('professionalModal').classList.remove('active');
+            selectedProfessional = null;
+        }
+
+        function bookProfessional() {
+            if (selectedProfessional) {
+                alert(`Booking request for ${selectedProfessional.name} initiated. You will receive a confirmation shortly.`);
+                closeProfessionalModal();
+            }
+        }
+
+        function scrollToExperts() {
+            document.getElementById('professionals-section').scrollIntoView({ behavior: 'smooth' });
         }
 
         const navItems = [
             { icon: '🏠', action: () => window.scrollTo({top: 0, behavior: 'smooth'}) },
-            { icon: '👥', action: () => showModal('experts') },
-            { icon: '📅', action: () => showModal('book') },
-            { icon: '🛠️', action: () => showModal('services') },
-            { icon: '👤', action: () => showModal('profile') }
+            { icon: '👥', action: scrollToExperts },
+            { icon: '📅', action: () => alert('Booking feature coming soon') },
+            { icon: '👤', action: () => alert('Profile feature coming soon') }
         ];
 
         const nav = document.getElementById('floatingNav');
@@ -879,13 +1035,13 @@
             nav.appendChild(btn);
         });
 
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                }
-            });
+        document.getElementById('professionalModal').addEventListener('click', (e) => {
+            if (e.target.id === 'professionalModal') {
+                closeProfessionalModal();
+            }
         });
+
+        renderProfessionals();
     </script>
 </body>
 </html>
