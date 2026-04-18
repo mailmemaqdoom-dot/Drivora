@@ -975,13 +975,13 @@
         </header>
 
         <div class="screens-container">
-            <div class="screen active" id="startScreen">
+            <div class="screen active" id="beginScreen">
                 <div class="hero">
                     <div class="container">
                         <h1>Your Journey,<br><span class="accent-text">Your Comfort</span></h1>
                         <p>Premium personal mobility. Trusted specialists, verified expertise.</p>
                         <div class="cta-buttons">
-                            <button class="btn btn-primary" onclick="showSheet('booking')">Plan Journey</button>
+                            <button class="btn btn-primary" onclick="showSheet('booking')">Arrange Care</button>
                             <button class="btn btn-secondary" onclick="navigateScreen('circle')">Meet Circle</button>
                         </div>
                     </div>
@@ -1026,32 +1026,32 @@
 
             <div class="screen" id="circleScreen">
                 <div class="screen-content">
-                    <h2 class="section-title">Meet Our <span class="accent-text">Specialists</span></h2>
+                    <h2 class="section-title">Meet Our <span class="accent-text">Trusted Circle</span></h2>
                     <div class="experts-scroll" id="expertsScroll"></div>
                     <h2 class="section-title" style="margin-top: 40px;">How It <span class="accent-text">Works</span></h2>
                     <div class="cards-grid">
                         <div class="card">
                             <div class="card-icon">1</div>
-                            <h3>Tell Us What You Need</h3>
-                            <p>Share your location, time, and preferences.</p>
+                            <h3>Share Your Needs</h3>
+                            <p>Tell us about your journey and preferences.</p>
                         </div>
                         <div class="card">
                             <div class="card-icon">2</div>
                             <h3>Choose Your Specialist</h3>
-                            <p>Browse verified professionals with ratings.</p>
+                            <p>Browse trusted professionals with verified ratings.</p>
                         </div>
                         <div class="card">
                             <div class="card-icon">3</div>
-                            <h3>Enjoy the Journey</h3>
-                            <p>Sit back and relax. Track in real-time.</p>
+                            <h3>Relax & Enjoy</h3>
+                            <p>Sit back. We handle everything with care.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="screen" id="planScreen">
+            <div class="screen" id="arrangeScreen">
                 <div class="screen-content">
-                    <h2 class="section-title">Plan Your Journey</h2>
+                    <h2 class="section-title">Arrange Your Care</h2>
                     <div class="booking-steps" id="bookingSteps">
                         <div class="step-indicator" id="stepIndicator"></div>
                         <div class="step-content active" data-step="1">
@@ -1097,7 +1097,7 @@
                             </div>
                         </div>
                         <div class="step-content" data-step="4">
-                            <h3 class="step-title">Choose a Specialist</h3>
+                            <h3 class="step-title">Choose Your Specialist</h3>
                             <p class="step-description">Pick your preferred professional</p>
                             <div class="experts-scroll" id="bookingExperts"></div>
                         </div>
@@ -1105,16 +1105,16 @@
                 </div>
             </div>
 
-            <div class="screen" id="careScreen">
+            <div class="screen" id="beyondScreen">
                 <div class="screen-content">
-                    <h2 class="section-title">Care <span class="accent-text">Services</span></h2>
+                    <h2 class="section-title">Beyond <span class="accent-text">Travel</span></h2>
                     <div class="services-grid" id="servicesGrid"></div>
                 </div>
             </div>
 
-            <div class="screen" id="accountScreen">
+            <div class="screen" id="spaceScreen">
                 <div class="screen-content">
-                    <h2 class="section-title">Your <span class="accent-text">Account</span></h2>
+                    <h2 class="section-title">Your <span class="accent-text">Space</span></h2>
                     <form class="profile-form">
                         <div class="profile-section">
                             <h3>Personal Information</h3>
@@ -1142,7 +1142,7 @@
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Save Account</button>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Save Preferences</button>
                     </form>
                 </div>
             </div>
@@ -1164,7 +1164,7 @@
     <div class="bottom-sheet" id="bookingSheet">
         <div class="sheet-content">
             <div class="sheet-header">
-                <h2 class="sheet-title">Plan Your Journey</h2>
+                <h2 class="sheet-title">Arrange Your Care</h2>
                 <button class="sheet-close" onclick="closeSheet('booking')">&times;</button>
             </div>
             <div class="booking-steps" id="bookingStepsSheet">
@@ -1210,7 +1210,7 @@
                     </div>
                 </div>
                 <div class="step-content" data-step="4">
-                    <h3 class="step-title">Choose a Specialist</h3>
+                    <h3 class="step-title">Choose Your Specialist</h3>
                     <p class="step-description">Pick your preferred professional</p>
                     <div class="experts-scroll" id="bookingExpertsSheet"></div>
                 </div>
@@ -1225,30 +1225,30 @@
     <div class="bottom-sheet" id="aiSheet">
         <div class="sheet-content">
             <div class="sheet-header">
-                <h2 class="sheet-title">Mobility Assistant</h2>
+                <h2 class="sheet-title">Care Guide</h2>
                 <button class="sheet-close" onclick="closeSheet('ai')">&times;</button>
             </div>
             <div class="ai-chat-container">
                 <div class="ai-message">
-                    Hello! I'm here to help arrange a trusted professional for your journey. Whether you need a specialist for city commuting, highway travel, or special occasions, I can guide you through the process.
+                    Welcome. I'm here to guide you through arranging care for your journey. Whether you need a specialist for city commuting, highway travel, or special occasions, I can help you find the perfect match.
                 </div>
                 <div style="margin-top: 16px;">
-                    <h3 style="font-size: 14px; opacity: 0.8; margin-bottom: 12px;">What can I help with?</h3>
+                    <h3 style="font-size: 14px; opacity: 0.8; margin-bottom: 12px;">How can I help?</h3>
                 </div>
                 <div class="ai-quick-actions">
-                    <button class="quick-action-btn" onclick="handleAIAction('booking')">Plan</button>
-                    <button class="quick-action-btn" onclick="handleAIAction('professionals')">Specialists</button>
+                    <button class="quick-action-btn" onclick="handleAIAction('booking')">Arrange</button>
+                    <button class="quick-action-btn" onclick="handleAIAction('professionals')">Circle</button>
                     <button class="quick-action-btn" onclick="handleAIAction('pricing')">Pricing</button>
                     <button class="quick-action-btn" onclick="handleAIAction('safety')">Safety</button>
                 </div>
                 <div class="ai-message" style="margin-top: 20px;">
-                    <strong>About Pricing:</strong> Rates depend on journey duration and professional experience level. City commutes typically start at 100 per hour, while highway specialists range from 120-150 per hour.
+                    <strong>About Pricing:</strong> Rates depend on journey duration and specialist experience level. City commutes typically start at 100 per hour, while highway specialists range from 120-150 per hour.
                 </div>
                 <div class="ai-message">
-                    <strong>Your Safety:</strong> All professionals are thoroughly verified with identity and license checks. Every journey is tracked in real-time with emergency support available 24/7.
+                    <strong>Your Safety:</strong> All specialists are thoroughly verified with identity and license checks. Every journey is tracked in real-time with emergency support available 24/7.
                 </div>
                 <div class="ai-message">
-                    <strong>Choosing a Professional:</strong> I recommend selecting based on your journey type. For highway travel, consider our highway specialists. For city navigation, our city experts excel.
+                    <strong>Choosing a Specialist:</strong> I recommend selecting based on your journey type. For highway travel, consider our highway specialists. For city navigation, our city experts excel.
                 </div>
             </div>
         </div>
@@ -1316,11 +1316,11 @@
         ];
 
         const navItems = [
-            { label: 'Start', id: 'start', icon: '<svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 13v8h14v-8"/></svg>' },
+            { label: 'Begin', id: 'begin', icon: '<svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 13v8h14v-8"/></svg>' },
             { label: 'Circle', id: 'circle', icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>' },
-            { label: 'Plan', id: 'plan', icon: '<svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>' },
-            { label: 'Care', id: 'care', icon: '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>' },
-            { label: 'Account', id: 'account', icon: '<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>' }
+            { label: 'Arrange', id: 'arrange', icon: '<svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>' },
+            { label: 'Beyond', id: 'beyond', icon: '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>' },
+            { label: 'Space', id: 'space', icon: '<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>' }
         ];
 
         let lastScrollY = 0;
@@ -1329,7 +1329,7 @@
         function renderNav() {
             const nav = document.getElementById('floatingNav');
             nav.innerHTML = navItems.map(item => `
-                <button class="nav-item ${item.id === 'start' ? 'active' : ''}" onclick="navigateScreen('${item.id}')">
+                <button class="nav-item ${item.id === 'begin' ? 'active' : ''}" onclick="navigateScreen('${item.id}')">
                     <div class="nav-icon">${item.icon}</div>
                     <div class="nav-label">${item.label}</div>
                 </button>
@@ -1346,7 +1346,7 @@
                     <div class="expert-rating">Rating: ${expert.rating}</div>
                     <div class="expert-bio">${expert.bio}</div>
                     <div class="expert-stats">
-                        <div class="stat"><div class="stat-value">${expert.trips}+</div><div class="stat-label">Trips</div></div>
+                        <div class="stat"><div class="stat-value">${expert.trips}+</div><div class="stat-label">Journeys</div></div>
                         <div class="stat"><div class="stat-value">${expert.experience}y</div><div class="stat-label">Exp</div></div>
                         <div class="stat"><div class="stat-value">${expert.rating}</div><div class="stat-label">Rating</div></div>
                     </div>
@@ -1421,7 +1421,7 @@
                 currentStep++;
                 updateSteps();
             } else {
-                alert('Journey planned! A specialist will contact you shortly.');
+                alert('Journey arranged! A specialist will contact you shortly.');
                 closeSheet('booking');
                 currentStep = 1;
                 updateSteps();
@@ -1459,7 +1459,7 @@
             } else if (action === 'pricing') {
                 alert('Pricing: City (100-110 per hour) | Highway (115-150 per hour) | Specialists (120-125 per hour)');
             } else if (action === 'safety') {
-                alert('All professionals are verified with identity and license checks. Real-time tracking and 24/7 emergency support available.');
+                alert('All specialists are verified with identity and license checks. Real-time tracking and 24/7 emergency support available.');
             }
         }
 
