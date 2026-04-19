@@ -961,6 +961,272 @@
             }
         }
 
+        footer {
+            background: linear-gradient(135deg, rgba(26, 31, 46, 0.6), rgba(35, 45, 63, 0.4));
+            border-top: 1px solid rgba(212, 165, 116, 0.12);
+            padding: 60px 20px 40px;
+            margin-top: 80px;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s ease;
+        }
+
+        body.light-mode footer {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(250, 248, 243, 0.5));
+            border-top-color: rgba(212, 165, 116, 0.15);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            opacity: 0.7;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-link {
+            font-size: 13px;
+            opacity: 0.65;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .footer-link:active {
+            opacity: 1;
+            transform: translateX(4px);
+            color: var(--gold-primary);
+        }
+
+        .faq-item {
+            background: rgba(35, 45, 63, 0.3);
+            border: 1px solid rgba(212, 165, 116, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        body.light-mode .faq-item {
+            background: rgba(255, 255, 255, 0.5);
+            border-color: rgba(212, 165, 116, 0.15);
+        }
+
+        .faq-header {
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .faq-header:active {
+            background: rgba(212, 165, 116, 0.08);
+        }
+
+        .faq-toggle {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: rgba(212, 165, 116, 0.05);
+        }
+
+        .faq-item.active .faq-content {
+            max-height: 200px;
+        }
+
+        .faq-text {
+            padding: 12px 16px;
+            font-size: 12px;
+            opacity: 0.65;
+            line-height: 1.5;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(212, 165, 116, 0.1);
+            border: 1px solid rgba(212, 165, 116, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body.light-mode .social-icon {
+            background: rgba(212, 165, 116, 0.08);
+            border-color: rgba(212, 165, 116, 0.25);
+        }
+
+        .social-icon:active {
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
+            border-color: var(--gold-primary);
+            transform: scale(0.9);
+        }
+
+        .social-icon svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:active svg {
+            fill: currentColor;
+            stroke: none;
+        }
+
+        .trust-badges {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .badge {
+            background: rgba(212, 165, 116, 0.08);
+            border: 1px solid rgba(212, 165, 116, 0.15);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 500;
+            opacity: 0.75;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        body.light-mode .badge {
+            background: rgba(212, 165, 116, 0.06);
+            border-color: rgba(212, 165, 116, 0.2);
+        }
+
+        .badge-icon {
+            font-size: 20px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .footer-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212, 165, 116, 0.2), transparent);
+            margin: 40px 0;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(212, 165, 116, 0.1);
+            font-size: 12px;
+            opacity: 0.6;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-bottom-link {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .footer-bottom-link:active {
+            opacity: 1;
+            color: var(--gold-primary);
+        }
+
+        @media (max-width: 768px) {
+            footer {
+                padding: 40px 20px 30px;
+                margin-top: 40px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-divider {
+                margin: 30px 0;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-bottom-links {
+                justify-content: center;
+            }
+        }
+
         @media (min-width: 1024px) {
             .floating-nav {
                 position: fixed;
@@ -1216,6 +1482,78 @@
                 </svg>
             </div>
         </button>
+
+        <footer>
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h3>About Drivora</h3>
+                    <p class="footer-text">Premium personal mobility for those who value trust, safety, and care. Every journey is handled with respect and attention to detail. Experience mobility that feels like a concierge service.</p>
+                    <div class="social-icons">
+                        <div class="social-icon" onclick="alert('Instagram')">
+                            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z" fill="currentColor"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+                        </div>
+                        <div class="social-icon" onclick="alert('Facebook')">
+                            <svg viewBox="0 0 24 24"><path d="M18 2H6a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4V6a4 4 0 0 0-4-4z"/><path d="M9 12h2v6h2v-6h2l1-2h-3V9a1 1 0 0 1 1-1h2V6h-2a3 3 0 0 0-3 3v1H9v2z" fill="currentColor"/></svg>
+                        </div>
+                        <div class="social-icon" onclick="alert('Twitter')">
+                            <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 7-7 7-7"/></svg>
+                        </div>
+                        <div class="social-icon" onclick="alert('LinkedIn')">
+                            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <div class="footer-links">
+                        <div class="footer-link" onclick="navigateScreen('begin')">Begin Journey</div>
+                        <div class="footer-link" onclick="navigateScreen('circle')">Trusted Circle</div>
+                        <div class="footer-link" onclick="showSheet('booking')">Arrange Care</div>
+                        <div class="footer-link" onclick="navigateScreen('beyond')">Beyond Travel</div>
+                        <div class="footer-link" onclick="navigateScreen('space')">Your Space</div>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>FAQ</h3>
+                    <div id="faqContainer"></div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Trust & Safety</h3>
+                    <div class="trust-badges">
+                        <div class="badge">
+                            <span class="badge-icon">V</span>
+                            Verified Professionals
+                        </div>
+                        <div class="badge">
+                            <span class="badge-icon">S</span>
+                            Secure Experience
+                        </div>
+                        <div class="badge">
+                            <span class="badge-icon">Q</span>
+                            Quality Checked
+                        </div>
+                        <div class="badge">
+                            <span class="badge-icon">P</span>
+                            Premium Standard
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="footer-bottom">
+                <div>Copyright 2024 Drivora. All rights reserved.</div>
+                <div class="footer-bottom-links">
+                    <div class="footer-bottom-link" onclick="alert('Privacy Policy')">Privacy</div>
+                    <div class="footer-bottom-link" onclick="alert('Terms of Service')">Terms</div>
+                    <div class="footer-bottom-link" onclick="alert('Contact Support')">Support</div>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <div class="bottom-sheet" id="bookingSheet">
@@ -1372,6 +1710,14 @@
             { title: 'Cleaning Kits', description: 'Complete car maintenance kits.', price: '1,200' }
         ];
 
+        const faqItems = [
+            { question: 'How does booking work?', answer: 'Share your journey details, choose your preferred specialist from our trusted circle, and confirm. Simple, transparent, and secure.' },
+            { question: 'How is safety ensured?', answer: 'All specialists are verified with identity and license checks. Real-time tracking and 24/7 emergency support available for every journey.' },
+            { question: 'What is included?', answer: 'Professional mobility service with verified specialist, real-time tracking, insurance coverage, and premium experience standards.' },
+            { question: 'How is pricing calculated?', answer: 'Rates depend on journey duration and specialist experience. City: 100-110 per hour, Highway: 115-150 per hour.' },
+            { question: 'What is the cancellation policy?', answer: 'Cancel free up to 30 minutes before journey. After that, standard cancellation fees apply. Full refund for specialist cancellations.' }
+        ];
+
         const navItems = [
             { label: 'Begin', id: 'begin', icon: '<svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 13v8h14v-8"/></svg>' },
             { label: 'Circle', id: 'circle', icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>' },
@@ -1430,11 +1776,34 @@
             container.innerHTML = [1, 2, 3, 4].map(i => `<div class="step-dot ${i === 1 ? 'active' : ''}"></div>`).join('');
         }
 
+        function renderFAQ() {
+            const container = document.getElementById('faqContainer');
+            if (!container) return;
+            container.innerHTML = faqItems.map((item, index) => `
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-header">
+                        <div>${item.question}</div>
+                        <div class="faq-toggle">
+                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </div>
+                    <div class="faq-content">
+                        <div class="faq-text">${item.answer}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleFAQ(element) {
+            element.classList.toggle('active');
+        }
+
         renderNav();
         renderExperts('expertsScroll');
         renderExperts('bookingExperts');
         renderExperts('bookingExpertsSheet');
         renderServices();
+        renderFAQ();
         renderStepIndicators('stepIndicator');
         renderStepIndicators('stepIndicatorSheet');
 
