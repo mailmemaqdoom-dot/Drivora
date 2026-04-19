@@ -60,6 +60,8 @@
             display: flex;
             flex-direction: column;
             position: relative;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         header {
@@ -138,6 +140,7 @@
             position: relative;
             display: flex;
             width: 100%;
+            min-height: 100vh;
         }
 
         .screen {
@@ -149,7 +152,7 @@
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             padding-top: 80px;
-            padding-bottom: 120px;
+            padding-bottom: 180px;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -507,6 +510,7 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(212, 165, 116, 0.1);
             width: auto;
             max-width: 90%;
+            pointer-events: auto;
         }
 
         body.light-mode .floating-nav {
@@ -542,6 +546,8 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            pointer-events: auto;
+            z-index: 1;
         }
 
         .nav-item:active {
@@ -965,9 +971,11 @@
             background: linear-gradient(135deg, rgba(26, 31, 46, 0.6), rgba(35, 45, 63, 0.4));
             border-top: 1px solid rgba(212, 165, 116, 0.12);
             padding: 60px 20px 40px;
-            margin-top: 80px;
             backdrop-filter: blur(20px);
             transition: all 0.4s ease;
+            position: relative;
+            z-index: 10;
+            width: 100%;
         }
 
         body.light-mode footer {
