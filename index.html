@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Drivora - Premium Personal Mobility</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -33,23 +36,19 @@
             --light-text-secondary: #6b6560;
         }
 
-        html {
+        html, body {
             width: 100%;
             height: 100%;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
-            width: 100%;
-            height: 100%;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, var(--dark-base) 0%, #131820 50%, var(--dark-surface) 100%);
             color: var(--dark-text);
             transition: all 0.4s ease;
             -webkit-user-select: none;
             user-select: none;
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
+            overflow-x: hidden;
         }
 
         body.light-mode {
@@ -57,15 +56,27 @@
             color: var(--light-text);
         }
 
-        #app {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            z-index: 1;
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
 
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold-primary);
+            border-radius: 4px;
+            opacity: 0.3;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            opacity: 0.5;
+        }
+
+        /* Header */
         header {
             position: fixed;
             top: 0;
@@ -101,6 +112,22 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--dark-base);
+            font-size: 14px;
         }
 
         .theme-toggle {
@@ -116,7 +143,6 @@
             align-items: center;
             padding: 2px;
             backdrop-filter: blur(10px);
-            pointer-events: auto;
         }
 
         body.light-mode .theme-toggle {
@@ -137,53 +163,34 @@
             transform: translateX(22px);
         }
 
-        #main-content {
-            flex: 1;
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            width: 100%;
-            z-index: 1;
-        }
-
-        .screens-container {
-            flex: 1;
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            width: 100%;
+        /* Main Content */
+        main {
+            margin-top: 70px;
+            margin-bottom: 80px;
+            min-height: calc(100vh - 150px);
         }
 
         .screen {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            padding-top: 110px;
-            padding-bottom: 180px;
+            display: none;
             opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            scroll-behavior: smooth;
-            z-index: 1;
+            transition: opacity 0.3s ease;
+            animation: fadeIn 0.3s ease forwards;
         }
 
         .screen.active {
+            display: block;
             opacity: 1;
-            pointer-events: auto;
-            position: relative;
-            top: auto;
-            left: auto;
         }
 
-        .screen-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            width: 100%;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .container {
@@ -192,6 +199,7 @@
             padding: 0 20px;
         }
 
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -200,36 +208,131 @@
             padding: 60px 20px;
             background: linear-gradient(135deg, rgba(212, 165, 116, 0.08) 0%, rgba(212, 165, 116, 0.03) 50%, transparent 100%);
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        body.light-mode .hero {
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.06) 0%, rgba(212, 165, 116, 0.02) 50%, transparent 100%);
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(212, 165, 116, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 40%;
+            right: 10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(201, 147, 95, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+        }
+
+        .tagline {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: slideInUp 0.8s ease 0.2s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero h1 {
-            font-size: clamp(32px, 8vw, 56px);
+            font-size: clamp(2.5rem, 8vw, 4rem);
             font-weight: 700;
             line-height: 1.2;
             margin-bottom: 24px;
             letter-spacing: -1px;
+            animation: slideInUp 0.8s ease 0.4s both;
         }
 
         .hero p {
-            font-size: 16px;
+            font-size: 1.1rem;
             opacity: 0.75;
             max-width: 600px;
             margin: 0 auto 40px;
             line-height: 1.6;
+            animation: slideInUp 0.8s ease 0.6s both;
         }
 
-        .cta-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 40px;
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin: 40px 0;
+            animation: slideInUp 0.8s ease 0.8s both;
         }
 
+        .metric-card {
+            background: rgba(35, 45, 63, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 165, 116, 0.12);
+            border-radius: 20px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .metric-card:hover {
+            border-color: rgba(212, 165, 116, 0.25);
+            transform: translateY(-4px);
+        }
+
+        body.light-mode .metric-card {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(212, 165, 116, 0.15);
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            opacity: 0.65;
+            margin-top: 8px;
+        }
+
+        /* Buttons */
         .btn {
             padding: 14px 28px;
             border: none;
@@ -241,7 +344,6 @@
             letter-spacing: 0.5px;
             -webkit-user-select: none;
             user-select: none;
-            pointer-events: auto;
         }
 
         .btn:active {
@@ -250,26 +352,36 @@
 
         .btn-primary {
             background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
-            color: #0f1419;
+            color: var(--dark-base);
             box-shadow: 0 12px 32px rgba(212, 165, 116, 0.25);
         }
 
-        .btn-primary:active {
-            box-shadow: 0 6px 16px rgba(212, 165, 116, 0.35);
+        .btn-primary:hover {
+            box-shadow: 0 16px 48px rgba(212, 165, 116, 0.35);
+            transform: translateY(-2px);
         }
 
         .btn-secondary {
             background: transparent;
             border: 1.5px solid var(--gold-primary);
             color: var(--gold-primary);
-            transition: all 0.3s ease;
         }
 
-        .btn-secondary:active {
+        .btn-secondary:hover {
             background: rgba(212, 165, 116, 0.12);
             border-color: var(--gold-light);
         }
 
+        .cta-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            animation: slideInUp 0.8s ease 1s both;
+        }
+
+        /* Cards Grid */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -285,10 +397,7 @@
             padding: 24px;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer;
-            -webkit-user-select: none;
-            user-select: none;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            pointer-events: auto;
         }
 
         body.light-mode .card {
@@ -297,20 +406,14 @@
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
         }
 
-        .card:active {
-            transform: scale(0.97);
+        .card:hover {
             border-color: rgba(212, 165, 116, 0.25);
-            background: rgba(35, 45, 63, 0.7);
-        }
-
-        body.light-mode .card:active {
-            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-4px);
         }
 
         .card-icon {
             font-size: 40px;
             margin-bottom: 16px;
-            opacity: 0.8;
         }
 
         .card h3 {
@@ -325,101 +428,27 @@
             font-size: 14px;
         }
 
-        .experts-scroll {
-            display: flex;
-            gap: 16px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            padding: 20px 0;
-            margin-top: 20px;
+        /* Sections */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
         }
 
-        .expert-card {
-            background: rgba(35, 45, 63, 0.5);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(212, 165, 116, 0.12);
-            border-radius: 20px;
-            padding: 20px;
-            min-width: 280px;
-            flex-shrink: 0;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-            -webkit-user-select: none;
-            user-select: none;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            pointer-events: auto;
-        }
-
-        body.light-mode .expert-card {
-            background: rgba(255, 255, 255, 0.7);
-            border-color: rgba(212, 165, 116, 0.15);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-        }
-
-        .expert-card:active {
-            transform: scale(0.97);
-            border-color: rgba(212, 165, 116, 0.25);
-            background: rgba(35, 45, 63, 0.7);
-        }
-
-        body.light-mode .expert-card:active {
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        .expert-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid var(--gold-primary);
-            object-fit: cover;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 12px rgba(212, 165, 116, 0.2);
-        }
-
-        .expert-name {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .expert-rating {
-            font-size: 14px;
-            opacity: 0.65;
-            margin-bottom: 8px;
-        }
-
-        .expert-bio {
-            font-size: 13px;
-            opacity: 0.55;
-            line-height: 1.4;
-            margin-bottom: 12px;
-        }
-
-        .expert-stats {
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            border-top: 1px solid rgba(212, 165, 116, 0.1);
-            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
-            margin: 12px 0;
-        }
-
-        .stat {
-            text-align: center;
-            font-size: 12px;
-        }
-
-        .stat-value {
+        .section-title {
+            font-size: 2.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 16px;
+            text-align: center;
         }
 
-        .stat-label {
-            opacity: 0.55;
-            margin-top: 2px;
+        .section-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.75;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            text-align: center;
+            line-height: 1.6;
         }
 
         .accent-text {
@@ -429,191 +458,520 @@
             background-clip: text;
         }
 
-        .section-title {
-            font-size: clamp(28px, 6vw, 44px);
-            font-weight: 700;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        /* Horizontal Scroll */
+        .scroll-container {
+            display: flex;
             gap: 16px;
-            margin-top: 30px;
+            overflow-x: auto;
+            padding: 20px 0;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
         }
 
-        .service-card {
+        .scroll-item {
+            flex-shrink: 0;
+            width: 320px;
             background: rgba(35, 45, 63, 0.5);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(212, 165, 116, 0.12);
             border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            padding: 20px;
+            transition: all 0.3s ease;
             cursor: pointer;
-            -webkit-user-select: none;
-            user-select: none;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            pointer-events: auto;
         }
 
-        body.light-mode .service-card {
+        .scroll-item:hover {
+            border-color: rgba(212, 165, 116, 0.25);
+            transform: translateY(-4px);
+        }
+
+        body.light-mode .scroll-item {
             background: rgba(255, 255, 255, 0.7);
             border-color: rgba(212, 165, 116, 0.15);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
         }
 
-        .service-card:active {
-            transform: scale(0.97);
-            border-color: rgba(212, 165, 116, 0.25);
-            background: rgba(35, 45, 63, 0.7);
-        }
-
-        body.light-mode .service-card:active {
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        .service-icon {
-            font-size: 44px;
-            padding: 20px;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.12), rgba(212, 165, 116, 0.05));
-            opacity: 0.8;
-        }
-
-        .service-content {
-            padding: 16px;
-        }
-
-        .service-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .service-description {
-            font-size: 13px;
-            opacity: 0.65;
-            line-height: 1.4;
+        .specialist-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
             margin-bottom: 12px;
         }
 
-        .service-price {
-            font-size: 16px;
+        .verified-badge {
+            background: var(--gold-primary);
+            color: var(--dark-base);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            display: inline-block;
+            margin-bottom: 8px;
         }
 
-        footer {
-            background: linear-gradient(135deg, rgba(26, 31, 46, 0.6), rgba(35, 45, 63, 0.4));
-            border-top: 1px solid rgba(212, 165, 116, 0.12);
-            padding: 60px 20px 40px;
-            backdrop-filter: blur(20px);
-            transition: all 0.4s ease;
-            position: relative;
-            z-index: 5;
+        .specialist-name {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .specialist-rating {
+            font-size: 13px;
+            opacity: 0.75;
+            margin-bottom: 8px;
+        }
+
+        .specialist-bio {
+            font-size: 13px;
+            opacity: 0.65;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .specialist-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(212, 165, 116, 0.2);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            opacity: 0.6;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select {
             width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            background: rgba(212, 165, 116, 0.1);
+            border: 1px solid rgba(212, 165, 116, 0.2);
+            color: var(--dark-text);
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        body.light-mode .form-group input,
+        body.light-mode .form-group select {
+            color: var(--light-text);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+        }
+
+        /* Bottom Sheet */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 200;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: flex-end;
+        }
+
+        @media (min-width: 768px) {
+            .modal.active {
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        .modal-content {
+            background: var(--dark-surface);
+            width: 100%;
+            border-radius: 24px 24px 0 0;
+            padding: 24px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        body.light-mode .modal-content {
+            background: var(--light-surface);
+        }
+
+        @media (min-width: 768px) {
+            .modal-content {
+                width: 100%;
+                max-width: 600px;
+                border-radius: 24px;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.15);
+        }
+
+        .modal-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark-text);
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .progress-dot {
+            height: 4px;
+            flex: 1;
+            border-radius: 2px;
+            background: rgba(212, 165, 116, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.active {
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 20, 25, 0.95);
+            border-top: 1px solid rgba(212, 165, 116, 0.15);
+            padding: 40px 20px;
+            margin-top: 60px;
         }
 
         body.light-mode footer {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(250, 248, 243, 0.5));
-            border-top-color: rgba(212, 165, 116, 0.15);
+            background: rgba(250, 248, 243, 0.95);
+            border-top-color: rgba(212, 165, 116, 0.2);
         }
 
         .footer-container {
             max-width: 1200px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
         }
 
-        .footer-section {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
         }
 
         .footer-section h3 {
             font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            opacity: 0.65;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(212, 165, 116, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .social-icon:hover {
+            background: rgba(212, 165, 116, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 24px;
+            border-top: 1px solid rgba(212, 165, 116, 0.15);
+            font-size: 14px;
+            opacity: 0.65;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 20, 25, 0.95);
+            border-top: 1px solid rgba(212, 165, 116, 0.15);
+            z-index: 150;
+            padding: max(8px, env(safe-area-inset-bottom)) 0 8px;
+        }
+
+        body.light-mode .bottom-nav {
+            background: rgba(250, 248, 243, 0.95);
+            border-top-color: rgba(212, 165, 116, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .bottom-nav {
+                display: flex;
+                justify-content: space-around;
+            }
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--dark-text-secondary);
+            transition: all 0.3s ease;
+            font-size: 12px;
             font-weight: 600;
+        }
+
+        .nav-item.active {
+            color: var(--gold-primary);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+        }
+
+        /* Desktop Header Nav */
+        @media (max-width: 768px) {
+            .header-nav {
+                display: none;
+            }
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 32px;
+        }
+
+        .header-nav button {
+            background: none;
+            border: none;
+            color: var(--dark-text-secondary);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .header-nav button.active {
+            color: var(--gold-primary);
+        }
+
+        .header-nav button:hover {
+            color: var(--dark-text);
+        }
+
+        /* Floating Buttons */
+        .floating-buttons {
+            display: none;
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            flex-direction: column;
+            gap: 16px;
+            z-index: 140;
+        }
+
+        @media (min-width: 769px) {
+            .floating-buttons {
+                display: flex;
+            }
+        }
+
+        .fab {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 24px rgba(212, 165, 116, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 32px rgba(212, 165, 116, 0.4);
+        }
+
+        .fab:active {
+            transform: scale(0.95);
+        }
+
+        /* Service Cards */
+        .service-card {
+            background: rgba(35, 45, 63, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 165, 116, 0.12);
+            border-radius: 20px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .service-card:hover {
+            border-color: rgba(212, 165, 116, 0.25);
+            transform: translateY(-4px);
+        }
+
+        body.light-mode .service-card {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(212, 165, 116, 0.15);
+        }
+
+        .service-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+
+        .service-content {
+            flex: 1;
+        }
+
+        .service-title {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .service-description {
+            font-size: 13px;
+            opacity: 0.65;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .service-price {
+            font-size: 18px;
+            font-weight: 700;
             background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 8px;
         }
 
-        .footer-text {
-            font-size: 13px;
-            opacity: 0.7;
-            line-height: 1.6;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .footer-link {
-            font-size: 13px;
-            opacity: 0.65;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            -webkit-user-select: none;
-            user-select: none;
-            pointer-events: auto;
-        }
-
-        .footer-link:active {
-            opacity: 1;
-            transform: translateX(4px);
-            color: var(--gold-primary);
-        }
-
+        /* FAQ */
         .faq-item {
-            background: rgba(35, 45, 63, 0.3);
-            border: 1px solid rgba(212, 165, 116, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            backdrop-filter: blur(10px);
-            pointer-events: auto;
+            background: rgba(35, 45, 63, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 165, 116, 0.12);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         body.light-mode .faq-item {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.7);
             border-color: rgba(212, 165, 116, 0.15);
         }
 
+        .faq-item.active {
+            border-color: rgba(212, 165, 116, 0.25);
+        }
+
         .faq-header {
-            padding: 12px 16px;
-            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-
-        .faq-header:active {
-            background: rgba(212, 165, 116, 0.08);
+            font-weight: 600;
         }
 
         .faq-toggle {
-            width: 16px;
-            height: 16px;
+            width: 24px;
+            height: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform 0.3s ease;
         }
 
         .faq-item.active .faq-toggle {
@@ -623,1226 +981,463 @@
         .faq-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            background: rgba(212, 165, 116, 0.05);
+            transition: max-height 0.3s ease;
+            margin-top: 0;
         }
 
         .faq-item.active .faq-content {
             max-height: 200px;
+            margin-top: 16px;
         }
 
         .faq-text {
-            padding: 12px 16px;
-            font-size: 12px;
-            opacity: 0.65;
-            line-height: 1.5;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 12px;
-            margin-top: 12px;
-        }
-
-        .social-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(212, 165, 116, 0.1);
-            border: 1px solid rgba(212, 165, 116, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            -webkit-user-select: none;
-            user-select: none;
-            pointer-events: auto;
-        }
-
-        body.light-mode .social-icon {
-            background: rgba(212, 165, 116, 0.08);
-            border-color: rgba(212, 165, 116, 0.25);
-        }
-
-        .social-icon:active {
-            background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
-            border-color: var(--gold-primary);
-            transform: scale(0.9);
-        }
-
-        .social-icon svg {
-            width: 16px;
-            height: 16px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 1.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transition: all 0.3s ease;
-        }
-
-        .social-icon:active svg {
-            fill: currentColor;
-            stroke: none;
-        }
-
-        .trust-badges {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .badge {
-            background: rgba(212, 165, 116, 0.08);
-            border: 1px solid rgba(212, 165, 116, 0.15);
-            border-radius: 8px;
-            padding: 12px;
-            text-align: center;
-            font-size: 12px;
-            font-weight: 500;
+            font-size: 14px;
             opacity: 0.75;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            backdrop-filter: blur(10px);
-        }
-
-        body.light-mode .badge {
-            background: rgba(212, 165, 116, 0.06);
-            border-color: rgba(212, 165, 116, 0.2);
-        }
-
-        .badge-icon {
-            font-size: 20px;
-            margin-bottom: 6px;
-            display: block;
-        }
-
-        .footer-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(212, 165, 116, 0.2), transparent);
-            margin: 40px 0;
-        }
-
-        .footer-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(212, 165, 116, 0.1);
-            font-size: 12px;
-            opacity: 0.6;
-        }
-
-        .footer-bottom-links {
-            display: flex;
-            gap: 16px;
-        }
-
-        .footer-bottom-link {
-            cursor: pointer;
-            transition: all 0.3s ease;
-            -webkit-user-select: none;
-            user-select: none;
-            pointer-events: auto;
-        }
-
-        .footer-bottom-link:active {
-            opacity: 1;
-            color: var(--gold-primary);
-        }
-
-        #floating-nav {
-            position: fixed;
-            bottom: 16px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            background: rgba(26, 31, 46, 0.8);
-            border: 1px solid rgba(212, 165, 116, 0.15);
-            padding: 12px 16px;
-            backdrop-filter: blur(30px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 4px;
-            border-radius: 50px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(212, 165, 116, 0.1);
-            width: auto;
-            max-width: 90%;
-            pointer-events: auto;
-        }
-
-        body.light-mode #floating-nav {
-            background: rgba(255, 255, 255, 0.85);
-            border-color: rgba(212, 165, 116, 0.2);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(212, 165, 116, 0.15);
-        }
-
-        #floating-nav.hidden {
-            transform: translateX(-50%) translateY(120px);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            background: transparent;
-            border: none;
-            color: inherit;
-            -webkit-user-select: none;
-            user-select: none;
-            padding: 8px 12px;
-            position: relative;
-            opacity: 0.55;
-            min-width: 56px;
-            min-height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            pointer-events: auto;
-            z-index: 1;
-        }
-
-        .nav-item:active {
-            transform: scale(0.8);
-            opacity: 1;
-        }
-
-        .nav-item.active {
-            color: var(--gold-primary);
-            opacity: 1;
-        }
-
-        .nav-item.active::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 32px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
-            border-radius: 1px;
-            animation: slideDown 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 0 8px rgba(212, 165, 116, 0.3);
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateX(-50%) translateY(-8px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(-50%) translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .nav-icon {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .nav-item.active .nav-icon {
-            filter: drop-shadow(0 0 8px rgba(212, 165, 116, 0.4));
-            transform: scale(1.1);
-        }
-
-        .nav-icon svg {
-            width: 100%;
-            height: 100%;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 1.2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .nav-item.active .nav-icon svg {
-            fill: currentColor;
-            stroke: none;
-        }
-
-        .nav-label {
-            font-size: 10px;
-            font-weight: 500;
-            letter-spacing: 0.2px;
-            opacity: 0.7;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .nav-item.active .nav-label {
-            opacity: 1;
-            font-weight: 600;
-        }
-
-        .ai-concierge-button {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 3000;
-            box-shadow: 0 16px 40px rgba(212, 165, 116, 0.35);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            animation: float 3s ease-in-out infinite;
-            -webkit-user-select: none;
-            user-select: none;
-            pointer-events: auto;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .ai-concierge-button:active {
-            transform: scale(0.9);
-            animation: none;
-        }
-
-        .ai-icon {
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .ai-icon svg {
-            width: 100%;
-            height: 100%;
-            fill: #0f1419;
-        }
-
-        #overlay-root {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 2000;
-            pointer-events: none;
-        }
-
-        .bottom-sheet {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            top: 0;
-            z-index: 2000;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(6px);
-            animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            -webkit-user-select: none;
-            user-select: none;
-            pointer-events: auto;
-        }
-
-        .bottom-sheet.active {
-            display: flex;
-            align-items: flex-end;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .sheet-content {
-            background: linear-gradient(135deg, rgba(35, 45, 63, 0.95), rgba(26, 31, 46, 0.95));
-            width: 100%;
-            max-height: 90vh;
-            border-radius: 24px 24px 0 0;
-            padding: 32px 20px max(20px, env(safe-area-inset-bottom));
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border-top: 1px solid rgba(212, 165, 116, 0.15);
-            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        body.light-mode .sheet-content {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(250, 248, 243, 0.98));
-            border-top-color: rgba(212, 165, 116, 0.2);
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-
-        .sheet-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .sheet-title {
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .sheet-close {
-            font-size: 28px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: inherit;
-            -webkit-user-select: none;
-            user-select: none;
-            transition: all 0.2s ease;
-            opacity: 0.7;
-            pointer-events: auto;
-        }
-
-        .sheet-close:active {
-            transform: scale(0.85);
-            opacity: 1;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 14px;
-            opacity: 0.85;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid rgba(212, 165, 116, 0.15);
-            border-radius: 12px;
-            background: rgba(15, 20, 25, 0.5);
-            color: inherit;
-            font-size: 16px;
-            -webkit-appearance: none;
-            appearance: none;
-            transition: all 0.2s ease;
-            backdrop-filter: blur(10px);
-            pointer-events: auto;
-        }
-
-        body.light-mode .form-group input,
-        body.light-mode .form-group select {
-            background: rgba(255, 255, 255, 0.6);
-            border-color: rgba(212, 165, 116, 0.2);
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--gold-primary);
-            background: rgba(15, 20, 25, 0.7);
-            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
-        }
-
-        body.light-mode .form-group input:focus,
-        body.light-mode .form-group select:focus {
-            background: rgba(255, 255, 255, 0.8);
-        }
-
-        .booking-steps {
-            display: none;
-        }
-
-        .booking-steps.active {
-            display: block;
-        }
-
-        .step-indicator {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
-            justify-content: center;
-        }
-
-        .step-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(212, 165, 116, 0.2);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .step-dot.active {
-            background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
-            width: 24px;
-            border-radius: 4px;
-            animation: expandDot 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 0 8px rgba(212, 165, 116, 0.3);
-        }
-
-        @keyframes expandDot {
-            0% { width: 8px; }
-            100% { width: 24px; }
-        }
-
-        .step-content {
-            display: none;
-        }
-
-        .step-content.active {
-            display: block;
-            animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .step-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        .step-description {
-            opacity: 0.65;
-            margin-bottom: 24px;
-            font-size: 14px;
-        }
-
-        .ai-chat-container {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .ai-message {
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.12), rgba(212, 165, 116, 0.05));
-            border: 1px solid rgba(212, 165, 116, 0.2);
-            border-radius: 12px;
-            padding: 16px;
             line-height: 1.6;
-            font-size: 14px;
-            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
         }
 
-        .ai-quick-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .quick-action-btn {
-            padding: 12px;
-            background: rgba(35, 45, 63, 0.5);
-            border: 1px solid rgba(212, 165, 116, 0.15);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            color: inherit;
-            font-weight: 500;
-            font-size: 14px;
-            -webkit-user-select: none;
-            user-select: none;
-            backdrop-filter: blur(10px);
-            pointer-events: auto;
-        }
-
-        body.light-mode .quick-action-btn {
-            background: rgba(255, 255, 255, 0.6);
-            border-color: rgba(212, 165, 116, 0.2);
-        }
-
-        .quick-action-btn:active {
-            background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
-            border-color: var(--gold-primary);
-            color: #0f1419;
-            transform: scale(0.95);
-        }
-
-        .profile-form {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .profile-section {
-            margin-bottom: 20px;
-        }
-
-        .profile-section h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            opacity: 0.9;
-        }
-
-        .trust-bar {
-            position: fixed;
-            top: 64px;
-            left: 0;
-            right: 0;
-            z-index: 99;
-            background: linear-gradient(90deg, rgba(212, 165, 116, 0.08), rgba(212, 165, 116, 0.04));
-            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
-            padding: 8px 20px;
-            font-size: 12px;
-            opacity: 0.75;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        body.light-mode .trust-bar {
-            background: linear-gradient(90deg, rgba(212, 165, 116, 0.06), rgba(212, 165, 116, 0.02));
-            border-bottom-color: rgba(212, 165, 116, 0.15);
-        }
-
-        .trust-bar-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            gap: 24px;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .trust-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            opacity: 0.8;
-        }
-
-        .trust-item::before {
-            content: '✓';
-            color: var(--gold-primary);
-            font-weight: 700;
-            font-size: 11px;
-        }
-
-        .verified-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            background: rgba(212, 165, 116, 0.1);
-            border: 1px solid rgba(212, 165, 116, 0.2);
-            border-radius: 4px;
-            padding: 2px 6px;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--gold-primary);
-        }
-
-        .safety-section {
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.08), rgba(212, 165, 116, 0.03));
-            border: 1px solid rgba(212, 165, 116, 0.12);
-            border-radius: 16px;
-            padding: 24px;
-            margin-top: 32px;
-            backdrop-filter: blur(10px);
-        }
-
-        body.light-mode .safety-section {
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.06), rgba(212, 165, 116, 0.02));
-            border-color: rgba(212, 165, 116, 0.15);
-        }
-
-        .safety-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--gold-primary);
-        }
-
-        .safety-item {
-            margin-bottom: 12px;
-            font-size: 14px;
-            opacity: 0.8;
-            line-height: 1.5;
-        }
-
-        .safety-item strong {
-            color: var(--gold-primary);
-            font-weight: 600;
-        }
-
-        .trust-metrics {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .metric {
-            background: rgba(35, 45, 63, 0.3);
-            border: 1px solid rgba(212, 165, 116, 0.1);
-            border-radius: 8px;
-            padding: 12px;
-            text-align: center;
-            font-size: 12px;
-            backdrop-filter: blur(10px);
-        }
-
-        body.light-mode .metric {
-            background: rgba(255, 255, 255, 0.5);
-            border-color: rgba(212, 165, 116, 0.15);
-        }
-
-        .metric-value {
-            font-weight: 700;
-            color: var(--gold-primary);
-            font-size: 16px;
-            margin-bottom: 4px;
-        }
-
-        .metric-label {
-            opacity: 0.65;
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
+            .tagline {
+                font-size: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
             .cards-grid {
                 grid-template-columns: 1fr;
             }
 
-            .services-grid {
-                grid-template-columns: 1fr;
+            .scroll-item {
+                width: 280px;
             }
 
-            .hero {
-                padding: 40px 20px;
-                min-height: auto;
-            }
-
-            .hero h1 {
-                font-size: 32px;
-            }
-
-            .ai-concierge-button {
-                width: 56px;
-                height: 56px;
-                bottom: 90px;
-            }
-
-            #floating-nav {
-                bottom: 16px;
-                padding: 10px 12px;
-                gap: 0;
-            }
-
-            .nav-item {
-                min-width: 52px;
-                min-height: 52px;
-                padding: 6px 8px;
-            }
-
-            .nav-label {
-                font-size: 9px;
-            }
-
-            .nav-icon {
-                width: 22px;
-                height: 22px;
-            }
-
-            footer {
-                padding: 40px 20px 30px;
-            }
-
-            .footer-container {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .footer-divider {
-                margin: 30px 0;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .footer-bottom-links {
-                justify-content: center;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            #floating-nav {
-                position: fixed;
-                top: 80px;
-                bottom: auto;
-                left: 50%;
-                transform: translateX(-50%);
-                background: rgba(26, 31, 46, 0.85);
-                border: 1px solid rgba(212, 165, 116, 0.15);
-                border-radius: 50px;
-                padding: 12px 24px;
-                flex-direction: row;
-                gap: 8px;
-                justify-content: center;
-                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-            }
-
-            #floating-nav.hidden {
-                transform: translateX(-50%) translateY(-120%);
-            }
-
-            body.light-mode #floating-nav {
-                background: rgba(255, 255, 255, 0.85);
-                border-color: rgba(212, 165, 116, 0.2);
-            }
-
-            .nav-item {
-                flex-direction: row;
-                gap: 8px;
-                padding: 8px 16px;
-                min-width: auto;
-                min-height: auto;
-            }
-
-            .nav-item.active::before {
-                display: none;
-            }
-
-            .nav-item.active {
-                background: rgba(212, 165, 116, 0.1);
-                border-radius: 50px;
-                padding: 8px 16px;
-            }
-
-            .nav-label {
-                font-size: 13px;
-            }
-
-            .screen {
-                padding-top: 140px;
-                padding-bottom: 40px;
+            main {
+                margin-bottom: 100px;
             }
         }
     </style>
 </head>
 <body>
-    <div id="app">
-        <header>
-            <div class="header-content">
-                <div class="logo">DRIVORA</div>
-                <button class="theme-toggle" id="themeToggle">
-                    <div class="theme-toggle-circle"></div>
-                </button>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">D</div>
+                <span>Drivora</span>
             </div>
-        </header>
+            <nav class="header-nav">
+                <button class="nav-btn active" data-section="begin">Begin</button>
+                <button class="nav-btn" data-section="circle">Circle</button>
+                <button class="nav-btn" data-section="arrange">Arrange</button>
+                <button class="nav-btn" data-section="beyond">Beyond</button>
+                <button class="nav-btn" data-section="space">Space</button>
+            </nav>
+            <button class="theme-toggle" id="themeToggle">
+                <div class="theme-toggle-circle"></div>
+            </button>
+        </div>
+    </header>
 
-        <div class="trust-bar">
-            <div class="trust-bar-content">
-                <div class="trust-item">Verified Professionals</div>
-                <div class="trust-item">Identity & License Checked</div>
-                <div class="trust-item">Safety First Experience</div>
+    <!-- Main Content -->
+    <main>
+        <!-- Begin Section (Hero) -->
+        <div class="screen active" id="begin">
+            <div class="hero">
+                <div class="hero-content">
+                    <div class="tagline">Premium Personal Mobility</div>
+                    <h1>Drivora</h1>
+                    <p>Experience mobility that feels like a concierge service. Premium specialists, verified trust, and seamless journeys.</p>
+                    
+                    <div class="metrics">
+                        <div class="metric-card">
+                            <div class="metric-value">99.8%</div>
+                            <div class="metric-label">satisfaction</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">5min</div>
+                            <div class="metric-label">response</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">100%</div>
+                            <div class="metric-label">verified</div>
+                        </div>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary" onclick="openBooking()">Arrange Your Care</button>
+                        <button class="btn btn-secondary">Learn More</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <main id="main-content">
-            <div class="screens-container">
-                <div class="screen active" id="beginScreen">
-                    <div class="hero">
-                        <div class="container">
-                            <h1>Your Journey,<br><span class="accent-text">Your Comfort</span></h1>
-                            <p>Premium personal mobility. Trusted specialists, verified expertise.</p>
-                            <div class="cta-buttons">
-                                <button class="btn btn-primary" onclick="showSheet('booking')">Arrange Care</button>
-                                <button class="btn btn-secondary" onclick="navigateScreen('circle')">Meet Circle</button>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Circle Section -->
+        <div class="screen" id="circle">
+            <div class="section">
+                <h2 class="section-title">Meet Our <span class="accent-text">Trusted Circle</span></h2>
+                <p class="section-subtitle">Verified professionals committed to excellence and your safety.</p>
 
-                    <div class="screen-content">
-                        <h2 class="section-title">Why Choose <span class="accent-text">Drivora</span></h2>
-                        <div class="cards-grid">
-                            <div class="card">
-                                <div class="card-icon">V</div>
-                                <h3>Verified Specialists</h3>
-                                <p>Thoroughly vetted and background-checked professionals.</p>
-                            </div>
-                            <div class="card">
-                                <div class="card-icon">R</div>
-                                <h3>Rated & Trusted</h3>
-                                <p>Real ratings from real passengers. Transparent metrics.</p>
-                            </div>
-                            <div class="card">
-                                <div class="card-icon">S</div>
-                                <h3>Your Safety First</h3>
-                                <p>Live tracking, emergency support, insurance coverage.</p>
-                            </div>
-                            <div class="card">
-                                <div class="card-icon">P</div>
-                                <h3>Premium Experience</h3>
-                                <p>Professional service with attention to detail.</p>
-                            </div>
-                            <div class="card">
-                                <div class="card-icon">A</div>
-                                <h3>On-Demand Availability</h3>
-                                <p>Book instantly or schedule in advance.</p>
-                            </div>
-                            <div class="card">
-                                <div class="card-icon">T</div>
-                                <h3>Transparent Pricing</h3>
-                                <p>No hidden charges. Fixed rates, instant quotes.</p>
-                            </div>
-                        </div>
+                <div class="metrics" style="margin-bottom: 40px;">
+                    <div class="metric-card">
+                        <div class="metric-value">99.8%</div>
+                        <div class="metric-label">satisfaction</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">5min</div>
+                        <div class="metric-label">response</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">verified</div>
                     </div>
                 </div>
 
-                <div class="screen" id="circleScreen">
-                    <div class="screen-content">
-                        <h2 class="section-title">Meet Our <span class="accent-text">Trusted Circle</span></h2>
-                        <div class="safety-section">
-                            <div class="safety-title">If Something Unexpected Happens</div>
-                            <div class="safety-item"><strong>24/7 Support Available:</strong> Reach our care team anytime for immediate assistance and guidance.</div>
-                            <div class="safety-item"><strong>Quick Issue Resolution:</strong> We address concerns with priority and transparency within 24 hours.</div>
-                            <div class="safety-item"><strong>Replacement Option:</strong> If needed, we arrange an alternative specialist immediately at no extra cost.</div>
-                            <div class="trust-metrics">
-                                <div class="metric">
-                                    <div class="metric-value">99.8%</div>
-                                    <div class="metric-label">Satisfaction</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">5min</div>
-                                    <div class="metric-label">Response Time</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">100%</div>
-                                    <div class="metric-label">Verified</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="experts-scroll" id="expertsScroll"></div>
-                        <h2 class="section-title" style="margin-top: 40px;">How It <span class="accent-text">Works</span></h2>
-                        <div class="cards-grid">
-                            <div class="card">
-                                <div class="card-icon">1</div>
-                                <h3>Share Your Needs</h3>
-                                <p>Tell us about your journey and preferences.</p>
-                            </div>
-                            <div class="card">
-                                <div class="card-icon">2</div>
-                                <h3>Choose Your Specialist</h3>
-                                <p>Browse trusted professionals with verified ratings.</p>
-                            </div>
-                            <div class="card">
-                                <div class="card-icon">3</div>
-                                <h3>Relax & Enjoy</h3>
-                                <p>Sit back. We handle everything with care.</p>
-                            </div>
-                        </div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 20px;">Featured Specialists</h3>
+                <div class="scroll-container" id="specialistsScroll"></div>
+
+                <h3 style="font-size: 1.5rem; margin: 40px 0 20px;">How It <span class="accent-text">Works</span></h3>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">1</div>
+                        <h3>Share Your Needs</h3>
+                        <p>Tell us about your journey and preferences.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">2</div>
+                        <h3>Choose Your Specialist</h3>
+                        <p>Browse trusted professionals with verified ratings.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">3</div>
+                        <h3>Relax & Enjoy</h3>
+                        <p>Sit back. We handle everything with care.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Arrange Section -->
+        <div class="screen" id="arrange">
+            <div class="section">
+                <h2 class="section-title">Arrange Your <span class="accent-text">Care</span></h2>
+                <p class="section-subtitle">Simple, transparent, and secure booking in just 4 steps.</p>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">📍</div>
+                        <h3>Where are you?</h3>
+                        <p>Tell us your pickup location and destination.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">⏰</div>
+                        <h3>When do you need it?</h3>
+                        <p>Select date and time for your journey.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🚗</div>
+                        <h3>What vehicle?</h3>
+                        <p>Choose your preferred vehicle type.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">👤</div>
+                        <h3>Choose Your Specialist</h3>
+                        <p>Pick your preferred professional.</p>
                     </div>
                 </div>
 
-                <div class="screen" id="arrangeScreen">
-                    <div class="screen-content">
-                        <h2 class="section-title">Arrange Your Care</h2>
-                        <div class="booking-steps" id="bookingSteps">
-                            <div class="step-indicator" id="stepIndicator"></div>
-                            <div class="step-content active" data-step="1">
-                                <h3 class="step-title">Where are you?</h3>
-                                <p class="step-description">Tell us your pickup location</p>
-                                <div class="form-group">
-                                    <input type="text" placeholder="Pickup location" id="pickupLocation">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" placeholder="Destination" id="destination">
-                                </div>
-                            </div>
-                            <div class="step-content" data-step="2">
-                                <h3 class="step-title">When do you need it?</h3>
-                                <p class="step-description">Select date and time</p>
-                                <div class="form-group">
-                                    <label>Date</label>
-                                    <input type="date" id="bookingDate">
-                                </div>
-                                <div class="form-group">
-                                    <label>Time</label>
-                                    <input type="time" id="bookingTime">
-                                </div>
-                            </div>
-                            <div class="step-content" data-step="3">
-                                <h3 class="step-title">What vehicle?</h3>
-                                <p class="step-description">Choose your preferred vehicle type</p>
-                                <div class="form-group">
-                                    <select id="vehicleType">
-                                        <option>Sedan</option>
-                                        <option>SUV</option>
-                                        <option>Luxury Sedan</option>
-                                        <option>Premium SUV</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <select id="serviceType">
-                                        <option>One-way</option>
-                                        <option>Round Trip</option>
-                                        <option>Hourly</option>
-                                        <option>Full Day</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="step-content" data-step="4">
-                                <h3 class="step-title">Choose Your Specialist</h3>
-                                <p class="step-description">Pick your preferred professional</p>
-                                <div class="experts-scroll" id="bookingExperts"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <button class="btn btn-primary" onclick="openBooking()" style="font-size: 18px; padding: 16px 40px;">Open Booking Flow</button>
                 </div>
 
-                <div class="screen" id="beyondScreen">
-                    <div class="screen-content">
-                        <h2 class="section-title">Beyond <span class="accent-text">Travel</span></h2>
-                        <div class="services-grid" id="servicesGrid"></div>
+                <h3 style="font-size: 1.5rem; margin: 40px 0 20px;">Transparent <span class="accent-text">Pricing</span></h3>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>City Commute</h3>
+                        <div style="font-size: 1.8rem; font-weight: 700; background: linear-gradient(135deg, var(--gold-primary), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 12px 0;">₹100-110</div>
+                        <p>per hour</p>
+                    </div>
+                    <div class="card">
+                        <h3>Highway Travel</h3>
+                        <div style="font-size: 1.8rem; font-weight: 700; background: linear-gradient(135deg, var(--gold-primary), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 12px 0;">₹115-150</div>
+                        <p>per hour</p>
+                    </div>
+                    <div class="card">
+                        <h3>Round Trip</h3>
+                        <div style="font-size: 1.8rem; font-weight: 700; background: linear-gradient(135deg, var(--gold-primary), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 12px 0;">Custom</div>
+                        <p>based on distance</p>
+                    </div>
+                    <div class="card">
+                        <h3>Full Day</h3>
+                        <div style="font-size: 1.8rem; font-weight: 700; background: linear-gradient(135deg, var(--gold-primary), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 12px 0;">Custom</div>
+                        <p>based on hours</p>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="screen" id="spaceScreen">
-                    <div class="screen-content">
-                        <h2 class="section-title">Your <span class="accent-text">Space</span></h2>
-                        <form class="profile-form">
-                            <div class="profile-section">
-                                <h3>Personal Information</h3>
-                                <div class="form-group">
-                                    <label>Full Name</label>
-                                    <input type="text" placeholder="Your name">
-                                </div>
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="email" placeholder="your@email.com">
-                                </div>
-                                <div class="form-group">
-                                    <label>Phone</label>
-                                    <input type="tel" placeholder="+91 XXXXX XXXXX">
-                                </div>
+        <!-- Beyond Section -->
+        <div class="screen" id="beyond">
+            <div class="section">
+                <h2 class="section-title">Beyond <span class="accent-text">Travel</span></h2>
+                <p class="section-subtitle">Premium car care services to keep your vehicle in pristine condition.</p>
+
+                <div class="cards-grid" id="servicesGrid"></div>
+            </div>
+        </div>
+
+        <!-- Space Section -->
+        <div class="screen" id="space">
+            <div class="section">
+                <h2 class="section-title">Your <span class="accent-text">Space</span></h2>
+                <p class="section-subtitle">Manage your profile and preferences.</p>
+
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <div style="background: rgba(35, 45, 63, 0.5); backdrop-filter: blur(20px); border: 1px solid rgba(212, 165, 116, 0.12); border-radius: 20px; padding: 32px;">
+                        <h3 style="font-size: 1.3rem; margin-bottom: 24px;">Personal Information</h3>
+                        <form id="profileForm" onsubmit="handleProfileSubmit(event)">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="fullName" placeholder="Your name" required>
                             </div>
-                            <div class="profile-section">
-                                <h3>Preferences</h3>
-                                <div class="form-group">
-                                    <label>Preferred Vehicle</label>
-                                    <select>
-                                        <option>Sedan</option>
-                                        <option>SUV</option>
-                                        <option>Luxury Sedan</option>
-                                    </select>
-                                </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="email" placeholder="your@email.com" required>
                             </div>
-                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Save Preferences</button>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" required>
+                            </div>
+
+                            <h3 style="font-size: 1.3rem; margin: 32px 0 24px;">Preferences</h3>
+                            <div class="form-group">
+                                <label>Preferred Vehicle</label>
+                                <select id="vehicle">
+                                    <option>Sedan</option>
+                                    <option>SUV</option>
+                                    <option>Luxury Sedan</option>
+                                    <option>Premium SUV</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 24px;">Save Preferences</button>
+                            <div id="successMsg" style="display: none; margin-top: 16px; padding: 12px; background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.5); border-radius: 8px; color: #22c55e; text-align: center; font-weight: 600;">✓ Preferences saved successfully!</div>
                         </form>
                     </div>
+
+                    <div class="cards-grid" style="margin-top: 40px;">
+                        <div class="card">
+                            <div class="card-icon">🚗</div>
+                            <div class="metric-value">0</div>
+                            <div class="metric-label">Your Journeys</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon">💳</div>
+                            <div class="metric-value">₹0</div>
+                            <div class="metric-label">Total Spent</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon">⭐</div>
+                            <div class="metric-value">0</div>
+                            <div class="metric-label">Favorite Specialists</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </main>
+        </div>
+    </main>
 
-        <footer>
-            <div class="footer-container">
-                <div class="footer-section">
-                    <h3>About Drivora</h3>
-                    <p class="footer-text">Premium personal mobility for those who value trust, safety, and care. Every journey is handled with respect and attention to detail. Experience mobility that feels like a concierge service.</p>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div>
+                    <div class="logo" style="margin-bottom: 16px;">
+                        <div class="logo-icon">D</div>
+                        <span>Drivora</span>
+                    </div>
+                    <p class="footer-text">Premium personal mobility for those who value trust, safety, and care. Every journey is handled with respect and attention to detail.</p>
                     <div class="social-icons">
-                        <div class="social-icon" onclick="alert('Instagram')">
-                            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z" fill="currentColor"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
-                        </div>
-                        <div class="social-icon" onclick="alert('Facebook')">
-                            <svg viewBox="0 0 24 24"><path d="M18 2H6a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4V6a4 4 0 0 0-4-4z"/><path d="M9 12h2v6h2v-6h2l1-2h-3V9a1 1 0 0 1 1-1h2V6h-2a3 3 0 0 0-3 3v1H9v2z" fill="currentColor"/></svg>
-                        </div>
-                        <div class="social-icon" onclick="alert('Twitter')">
-                            <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 7-7 7-7"/></svg>
-                        </div>
-                        <div class="social-icon" onclick="alert('LinkedIn')">
-                            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-                        </div>
+                        <div class="social-icon">📷</div>
+                        <div class="social-icon">𝕏</div>
+                        <div class="social-icon">💼</div>
                     </div>
                 </div>
-
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <div class="footer-links">
-                        <div class="footer-link" onclick="navigateScreen('begin')">Begin Journey</div>
-                        <div class="footer-link" onclick="navigateScreen('circle')">Trusted Circle</div>
-                        <div class="footer-link" onclick="showSheet('booking')">Arrange Care</div>
-                        <div class="footer-link" onclick="navigateScreen('beyond')">Beyond Travel</div>
-                        <div class="footer-link" onclick="navigateScreen('space')">Your Space</div>
-                    </div>
+                <div>
+                    <h3>About</h3>
+                    <p class="footer-text"><a href="#" style="color: inherit; text-decoration: none; opacity: 0.75;">About Drivora</a></p>
+                    <p class="footer-text"><a href="#" style="color: inherit; text-decoration: none; opacity: 0.75;">Careers</a></p>
+                    <p class="footer-text"><a href="#" style="color: inherit; text-decoration: none; opacity: 0.75;">Press</a></p>
                 </div>
-
-                <div class="footer-section">
-                    <h3>FAQ</h3>
-                    <div id="faqContainer"></div>
+                <div>
+                    <h3>Support</h3>
+                    <p class="footer-text"><a href="#" style="color: inherit; text-decoration: none; opacity: 0.75;">Help Center</a></p>
+                    <p class="footer-text"><a href="#" style="color: inherit; text-decoration: none; opacity: 0.75;">Contact Us</a></p>
+                    <p class="footer-text"><a href="#" style="color: inherit; text-decoration: none; opacity: 0.75;">Safety</a></p>
                 </div>
-
-                <div class="footer-section">
-                    <h3>Trust & Safety</h3>
-                    <div class="trust-badges">
-                        <div class="badge">
-                            <span class="badge-icon">V</span>
-                            Verified Professionals
-                        </div>
-                        <div class="badge">
-                            <span class="badge-icon">S</span>
-                            Secure Experience
-                        </div>
-                        <div class="badge">
-                            <span class="badge-icon">Q</span>
-                            Quality Checked
-                        </div>
-                        <div class="badge">
-                            <span class="badge-icon">P</span>
-                            Premium Standard
-                        </div>
-                    </div>
+                <div>
+                    <h3>Legal</h3>
+                    <p class="footer-text"><a href="#" style="color: inherit; text-decoration: none; opacity: 0.75;">Privacy Policy</a></p>
+                    <p class="footer-text"><a href="#" style="color: inherit; text-decoration: none; opacity: 0.75;">Terms of Service</a></p>
+                    <p class="footer-text"><a href="#" style="color: inherit; text-decoration: none; opacity: 0.75;">Accessibility</a></p>
                 </div>
             </div>
-
-            <div class="footer-divider"></div>
-
             <div class="footer-bottom">
-                <div>Copyright 2024 Drivora. All rights reserved.</div>
-                <div class="footer-bottom-links">
-                    <div class="footer-bottom-link" onclick="alert('Privacy Policy')">Privacy</div>
-                    <div class="footer-bottom-link" onclick="alert('Terms of Service')">Terms</div>
-                    <div class="footer-bottom-link" onclick="alert('Contact Support')">Support</div>
-                </div>
+                <p>© 2026 Drivora. All rights reserved.</p>
             </div>
-        </footer>
+        </div>
+    </footer>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" onclick="switchSection('begin')">
+            <div class="nav-icon">🏠</div>
+            <span>Begin</span>
+        </button>
+        <button class="nav-item" onclick="switchSection('circle')">
+            <div class="nav-icon">👥</div>
+            <span>Circle</span>
+        </button>
+        <button class="nav-item" onclick="switchSection('arrange')">
+            <div class="nav-icon">✓</div>
+            <span>Arrange</span>
+        </button>
+        <button class="nav-item" onclick="switchSection('beyond')">
+            <div class="nav-icon">⭐</div>
+            <span>Beyond</span>
+        </button>
+        <button class="nav-item" onclick="switchSection('space')">
+            <div class="nav-icon">👤</div>
+            <span>Space</span>
+        </button>
+    </nav>
+
+    <!-- Floating Buttons -->
+    <div class="floating-buttons">
+        <button class="fab" onclick="openCareGuide()" title="Care Guide">🤖</button>
+        <button class="fab" onclick="openBooking()" title="Arrange Your Care">✓</button>
     </div>
 
-    <nav id="floating-nav"></nav>
-    <button class="ai-concierge-button" onclick="showSheet('ai')">
-        <div class="ai-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="9" fill="currentColor"/>
-                <circle cx="9" cy="11" r="1.5" fill="white"/>
-                <circle cx="15" cy="11" r="1.5" fill="white"/>
-                <path d="M 9 14 Q 12 15 15 14" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-            </svg>
-        </div>
-    </button>
+    <!-- Booking Modal -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Arrange Your Care</h2>
+                <button class="modal-close" onclick="closeBooking()">×</button>
+            </div>
 
-    <div id="overlay-root">
-        <div class="bottom-sheet" id="bookingSheet">
-            <div class="sheet-content">
-                <div class="sheet-header">
-                    <h2 class="sheet-title">Arrange Your Care</h2>
-                    <button class="sheet-close" onclick="closeSheet('booking')">&times;</button>
+            <div class="progress-bar" id="progressBar">
+                <div class="progress-dot active"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+            </div>
+
+            <div id="bookingStep1" class="booking-step active">
+                <h3>Where are you?</h3>
+                <p style="opacity: 0.75; margin-bottom: 16px;">Tell us your pickup location and destination.</p>
+                <div class="form-group">
+                    <input type="text" placeholder="Pickup location" id="pickupLocation">
                 </div>
-                <div class="booking-steps" id="bookingStepsSheet">
-                    <div class="step-indicator" id="stepIndicatorSheet"></div>
-                    <div class="step-content active" data-step="1">
-                        <h3 class="step-title">Where are you?</h3>
-                        <p class="step-description">Tell us your pickup location</p>
-                        <div class="form-group">
-                            <input type="text" placeholder="Pickup location">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" placeholder="Destination">
-                        </div>
-                    </div>
-                    <div class="step-content" data-step="2">
-                        <h3 class="step-title">When do you need it?</h3>
-                        <p class="step-description">Select date and time</p>
-                        <div class="form-group">
-                            <label>Date</label>
-                            <input type="date">
-                        </div>
-                        <div class="form-group">
-                            <label>Time</label>
-                            <input type="time">
-                        </div>
-                    </div>
-                    <div class="step-content" data-step="3">
-                        <h3 class="step-title">What vehicle?</h3>
-                        <p class="step-description">Choose your preferred vehicle type</p>
-                        <div class="form-group">
-                            <select>
-                                <option>Sedan</option>
-                                <option>SUV</option>
-                                <option>Luxury Sedan</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select>
-                                <option>One-way</option>
-                                <option>Round Trip</option>
-                                <option>Hourly</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="step-content" data-step="4">
-                        <h3 class="step-title">Choose Your Specialist</h3>
-                        <p class="step-description">Pick your preferred professional</p>
-                        <div class="experts-scroll" id="bookingExpertsSheet"></div>
-                    </div>
-                </div>
-                <div style="display: flex; gap: 12px; margin-top: 24px;">
-                    <button class="btn btn-secondary" id="prevBtn" onclick="previousStep()" style="display: none; flex: 1;">Back</button>
-                    <button class="btn btn-primary" id="nextBtn" onclick="nextStep()" style="flex: 1;">Next</button>
+                <div class="form-group">
+                    <input type="text" placeholder="Destination" id="destination">
                 </div>
             </div>
-        </div>
 
-        <div class="bottom-sheet" id="aiSheet">
-            <div class="sheet-content">
-                <div class="sheet-header">
-                    <h2 class="sheet-title">Care Guide</h2>
-                    <button class="sheet-close" onclick="closeSheet('ai')">&times;</button>
+            <div id="bookingStep2" class="booking-step" style="display: none;">
+                <h3>When do you need it?</h3>
+                <p style="opacity: 0.75; margin-bottom: 16px;">Select date and time for your journey.</p>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="bookingDate">
                 </div>
-                <div class="ai-chat-container">
-                    <div class="ai-message">
-                        Welcome. I'm here to guide you through arranging care for your journey. Whether you need a specialist for city commuting, highway travel, or special occasions, I can help you find the perfect match.
-                    </div>
-                    <div style="margin-top: 16px;">
-                        <h3 style="font-size: 14px; opacity: 0.75; margin-bottom: 12px;">How can I help?</h3>
-                    </div>
-                    <div class="ai-quick-actions">
-                        <button class="quick-action-btn" onclick="handleAIAction('booking')">Arrange</button>
-                        <button class="quick-action-btn" onclick="handleAIAction('professionals')">Circle</button>
-                        <button class="quick-action-btn" onclick="handleAIAction('pricing')">Pricing</button>
-                        <button class="quick-action-btn" onclick="handleAIAction('safety')">Safety</button>
-                    </div>
-                    <div class="ai-message" style="margin-top: 20px;">
-                        <strong>About Pricing:</strong> Rates depend on journey duration and specialist experience level. City commutes typically start at 100 per hour, while highway specialists range from 120-150 per hour.
-                    </div>
-                    <div class="ai-message">
-                        <strong>Your Safety:</strong> All specialists are thoroughly verified with identity and license checks. Every journey is tracked in real-time with emergency support available 24/7.
-                    </div>
-                    <div class="ai-message">
-                        <strong>Choosing a Specialist:</strong> I recommend selecting based on your journey type. For highway travel, consider our highway specialists. For city navigation, our city experts excel.
+                <div class="form-group">
+                    <label>Time</label>
+                    <input type="time" id="bookingTime">
+                </div>
+            </div>
+
+            <div id="bookingStep3" class="booking-step" style="display: none;">
+                <h3>What vehicle?</h3>
+                <p style="opacity: 0.75; margin-bottom: 16px;">Choose your preferred vehicle type and service.</p>
+                <div class="form-group">
+                    <label>Vehicle Type</label>
+                    <select id="vehicleType">
+                        <option>Sedan</option>
+                        <option>SUV</option>
+                        <option>Luxury Sedan</option>
+                        <option>Premium SUV</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Service Type</label>
+                    <select id="serviceType">
+                        <option>One-way</option>
+                        <option>Round Trip</option>
+                        <option>Hourly</option>
+                        <option>Full Day</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="bookingStep4" class="booking-step" style="display: none;">
+                <h3>Choose Your Specialist</h3>
+                <p style="opacity: 0.75; margin-bottom: 16px;">Pick your preferred professional.</p>
+                <div id="bookingSpecialists"></div>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousBookingStep()" style="display: none; flex: 1;">Back</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextBookingStep()" style="flex: 1;">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Care Guide Modal -->
+    <div class="modal" id="careGuideModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="font-size: 24px;">🤖</div>
+                    <div>
+                        <h2 style="margin: 0; font-size: 18px;">Care Guide</h2>
+                        <p style="font-size: 12px; opacity: 0.65; margin: 0;">Always here to help</p>
                     </div>
                 </div>
+                <button class="modal-close" onclick="closeCareGuide()">×</button>
+            </div>
+
+            <div id="chatMessages" style="height: 300px; overflow-y: auto; margin-bottom: 16px; padding: 16px 0;">
+                <div style="background: rgba(212, 165, 116, 0.1); padding: 12px 16px; border-radius: 12px; margin-bottom: 12px;">
+                    <p style="font-size: 14px; line-height: 1.5;">Welcome! I'm your Drivora Care Guide. I'm here to help you arrange premium mobility services. How can I assist you today?</p>
+                </div>
+            </div>
+
+            <div id="quickActions" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px;">
+                <button class="btn btn-secondary" onclick="sendCareGuideMessage('arrange')" style="padding: 8px; font-size: 12px;">📍 Arrange</button>
+                <button class="btn btn-secondary" onclick="sendCareGuideMessage('circle')" style="padding: 8px; font-size: 12px;">👥 Circle</button>
+                <button class="btn btn-secondary" onclick="sendCareGuideMessage('pricing')" style="padding: 8px; font-size: 12px;">💰 Pricing</button>
+                <button class="btn btn-secondary" onclick="sendCareGuideMessage('safety')" style="padding: 8px; font-size: 12px;">🛡️ Safety</button>
+            </div>
+
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="careGuideInput" placeholder="Ask me anything..." style="flex: 1; padding: 12px 16px; border-radius: 12px; background: rgba(212, 165, 116, 0.1); border: 1px solid rgba(212, 165, 116, 0.2); color: var(--dark-text); font-size: 14px;" onkeypress="if(event.key==='Enter') sendCareGuideMessage()">
+                <button class="btn btn-primary" onclick="sendCareGuideMessage()" style="padding: 12px 16px;">→</button>
             </div>
         </div>
     </div>
 
     <script>
+        // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
-        const savedTheme = localStorage.getItem('theme') || 'dark';
+        const savedTheme = localStorage.getItem('drivora-theme') || 'dark';
+        
         if (savedTheme === 'light') {
             document.body.classList.add('light-mode');
             themeToggle.classList.add('active');
@@ -1852,244 +1447,254 @@
             document.body.classList.toggle('light-mode');
             themeToggle.classList.toggle('active');
             const currentTheme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
-            localStorage.setItem('theme', currentTheme);
+            localStorage.setItem('drivora-theme', currentTheme);
         });
 
-        const experts = [
-            {
-                name: 'Rajesh Kumar',
-                rating: 4.9,
-                trips: 2100,
-                experience: 11,
-                bio: 'Highway specialist with 11 years of experience.',
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23d4a574"/%3E%3Ctext x="50" y="50" text-anchor="middle" dy=".3em" font-size="40" fill="white"%3ERK%3C/text%3E%3C/svg%3E'
-            },
-            {
-                name: 'Priya Sharma',
-                rating: 4.8,
-                trips: 1850,
-                experience: 9,
-                bio: 'City navigation expert with premium service.',
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23d4a574"/%3E%3Ctext x="50" y="50" text-anchor="middle" dy=".3em" font-size="40" fill="white"%3EPS%3C/text%3E%3C/svg%3E'
-            },
-            {
-                name: 'Arjun Menon',
-                rating: 4.85,
-                trips: 1650,
-                experience: 8,
-                bio: 'Night travel specialist focused on safety.',
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23d4a574"/%3E%3Ctext x="50" y="50" text-anchor="middle" dy=".3em" font-size="40" fill="white"%3EAM%3C/text%3E%3C/svg%3E'
-            },
-            {
-                name: 'Deepa Iyer',
-                rating: 4.75,
-                trips: 1420,
-                experience: 7,
-                bio: 'Corporate travel specialist with attention to detail.',
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23d4a574"/%3E%3Ctext x="50" y="50" text-anchor="middle" dy=".3em" font-size="40" fill="white"%3EDI%3C/text%3E%3C/svg%3E'
-            }
+        // Specialists Data
+        const specialists = [
+            { name: 'Rajesh Kumar', rating: 4.9, trips: 2100, experience: 11, bio: 'Highway specialist', avatar: '🚗' },
+            { name: 'Priya Sharma', rating: 4.8, trips: 1850, experience: 9, bio: 'City navigation expert', avatar: '🏙️' },
+            { name: 'Arjun Menon', rating: 4.85, trips: 1650, experience: 8, bio: 'Night travel specialist', avatar: '🌙' },
+            { name: 'Deepa Iyer', rating: 4.75, trips: 1420, experience: 7, bio: 'Corporate travel specialist', avatar: '💼' },
         ];
 
+        // Services Data
         const services = [
-            { title: 'Premium Car Wash', description: 'Professional exterior cleaning with premium products.', price: '500' },
-            { title: 'Interior Deep Cleaning', description: 'Thorough interior sanitization and detailing.', price: '800' },
-            { title: 'Full Detailing', description: 'Complete exterior and interior restoration.', price: '1,500' },
-            { title: 'Polish & Protection', description: 'Professional ceramic coating and paint protection.', price: '2,000' },
-            { title: 'Premium Seat Covers', description: 'High-quality, custom-fit seat covers.', price: '3,000' },
-            { title: 'Car Perfumes', description: 'Luxury car fragrances for a fresh interior.', price: '400' },
-            { title: 'Phone Holders', description: 'Premium phone mounting solutions.', price: '600' },
-            { title: 'Cleaning Kits', description: 'Complete car maintenance kits.', price: '1,200' }
+            { title: 'Premium Car Wash', description: 'Professional exterior cleaning with premium products.', price: '₹500', icon: '🚿' },
+            { title: 'Interior Deep Cleaning', description: 'Thorough interior sanitization and detailing.', price: '₹800', icon: '🧹' },
+            { title: 'Full Detailing', description: 'Complete exterior and interior restoration.', price: '₹1,500', icon: '✨' },
+            { title: 'Polish & Protection', description: 'Professional ceramic coating and paint protection.', price: '₹2,000', icon: '🛡️' },
+            { title: 'Premium Seat Covers', description: 'High-quality, custom-fit seat covers.', price: '₹3,000', icon: '🪑' },
+            { title: 'Car Perfumes', description: 'Luxury car fragrances for a fresh interior.', price: '₹400', icon: '🌸' },
+            { title: 'Phone Holders', description: 'Premium phone mounting solutions.', price: '₹600', icon: '📱' },
+            { title: 'Cleaning Kits', description: 'Complete car maintenance kits.', price: '₹1,200', icon: '🧴' },
         ];
 
-        const faqItems = [
-            { question: 'How does booking work?', answer: 'Share your journey details, choose your preferred specialist from our trusted circle, and confirm. Simple, transparent, and secure.' },
-            { question: 'How is safety ensured?', answer: 'All specialists are verified with identity and license checks. Real-time tracking and 24/7 emergency support available for every journey.' },
-            { question: 'What is included?', answer: 'Professional mobility service with verified specialist, real-time tracking, insurance coverage, and premium experience standards.' },
-            { question: 'How is pricing calculated?', answer: 'Rates depend on journey duration and specialist experience. City: 100-110 per hour, Highway: 115-150 per hour.' },
-            { question: 'What is the cancellation policy?', answer: 'Cancel free up to 30 minutes before journey. After that, standard cancellation fees apply. Full refund for specialist cancellations.' }
-        ];
-
-        const navItems = [
-            { label: 'Begin', id: 'begin', icon: '<svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 13v8h14v-8"/></svg>' },
-            { label: 'Circle', id: 'circle', icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>' },
-            { label: 'Arrange', id: 'arrange', icon: '<svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>' },
-            { label: 'Beyond', id: 'beyond', icon: '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>' },
-            { label: 'Space', id: 'space', icon: '<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>' }
-        ];
-
-        let lastScrollY = 0;
-
-        function renderNav() {
-            const nav = document.getElementById('floating-nav');
-            nav.innerHTML = navItems.map(item => `
-                <button class="nav-item ${item.id === 'begin' ? 'active' : ''}" onclick="navigateScreen('${item.id}')">
-                    <div class="nav-icon">${item.icon}</div>
-                    <div class="nav-label">${item.label}</div>
-                </button>
-            `).join('');
-        }
-
-        function renderExperts(containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            container.innerHTML = experts.map(expert => `
-                <div class="expert-card" onclick="selectExpert('${expert.name}')">
-                    <img src="${expert.image}" alt="${expert.name}" class="expert-avatar">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <div class="expert-name">${expert.name}</div>
-                        <div class="verified-badge">Verified</div>
+        // Render Specialists
+        function renderSpecialists() {
+            const container = document.getElementById('specialistsScroll');
+            container.innerHTML = specialists.map(s => `
+                <div class="scroll-item">
+                    <div class="specialist-avatar">${s.avatar}</div>
+                    <div class="verified-badge">Verified</div>
+                    <div class="specialist-name">${s.name}</div>
+                    <div class="specialist-rating">⭐ ${s.rating} • Highly Recommended</div>
+                    <div class="specialist-bio">${s.bio}</div>
+                    <div class="specialist-stats">
+                        <div><div class="stat-value">${s.trips}+</div><div class="stat-label">Journeys</div></div>
+                        <div><div class="stat-value">${s.experience}y</div><div class="stat-label">Exp</div></div>
+                        <div><div class="stat-value">${s.rating}</div><div class="stat-label">Rating</div></div>
                     </div>
-                    <div class="expert-rating">Highly Recommended</div>
-                    <div class="expert-bio">${expert.bio}</div>
-                    <div style="font-size: 11px; opacity: 0.6; margin-top: 6px;">Trusted in Tamil Nadu cities</div>
-                    <div class="expert-stats">
-                        <div class="stat"><div class="stat-value">${expert.trips}+</div><div class="stat-label">Journeys</div></div>
-                        <div class="stat"><div class="stat-value">${expert.experience}y</div><div class="stat-label">Exp</div></div>
-                        <div class="stat"><div class="stat-value">${expert.rating}</div><div class="stat-label">Rating</div></div>
-                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 12px; font-size: 14px;">Select</button>
                 </div>
             `).join('');
         }
 
+        // Render Services
         function renderServices() {
             const container = document.getElementById('servicesGrid');
-            container.innerHTML = services.map(service => `
+            container.innerHTML = services.map(s => `
                 <div class="service-card">
-                    <div class="service-icon">S</div>
+                    <div class="service-icon">${s.icon}</div>
                     <div class="service-content">
-                        <div class="service-title">${service.title}</div>
-                        <div class="service-description">${service.description}</div>
-                        <div class="service-price">${service.price}</div>
+                        <div class="service-title">${s.title}</div>
+                        <div class="service-description">${s.description}</div>
+                        <div class="service-price">${s.price}</div>
                     </div>
                 </div>
             `).join('');
         }
 
-        function renderStepIndicators(containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            container.innerHTML = [1, 2, 3, 4].map(i => `<div class="step-dot ${i === 1 ? 'active' : ''}"></div>`).join('');
-        }
-
-        function renderFAQ() {
-            const container = document.getElementById('faqContainer');
-            if (!container) return;
-            container.innerHTML = faqItems.map((item, index) => `
-                <div class="faq-item" onclick="toggleFAQ(this)">
-                    <div class="faq-header">
-                        <div>${item.question}</div>
-                        <div class="faq-toggle">
-                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                        </div>
-                    </div>
-                    <div class="faq-content">
-                        <div class="faq-text">${item.answer}</div>
+        // Render Booking Specialists
+        function renderBookingSpecialists() {
+            const container = document.getElementById('bookingSpecialists');
+            container.innerHTML = specialists.map(s => `
+                <div class="service-card" onclick="selectSpecialist('${s.name}')">
+                    <div class="specialist-avatar">${s.avatar}</div>
+                    <div class="service-content">
+                        <div class="service-title">${s.name}</div>
+                        <div class="service-description">⭐ ${s.rating} • ${s.trips}+ journeys</div>
                     </div>
                 </div>
             `).join('');
         }
 
-        function toggleFAQ(element) {
-            element.classList.toggle('active');
-        }
-
-        renderNav();
-        renderExperts('expertsScroll');
-        renderExperts('bookingExperts');
-        renderExperts('bookingExpertsSheet');
-        renderServices();
-        renderFAQ();
-        renderStepIndicators('stepIndicator');
-        renderStepIndicators('stepIndicatorSheet');
-
-        document.querySelectorAll('.screen').forEach(screen => {
-            screen.addEventListener('scroll', () => {
-                const currentScrollY = screen.scrollTop;
-                const nav = document.getElementById('floating-nav');
-
-                if (currentScrollY > lastScrollY && currentScrollY > 100) {
-                    nav.classList.add('hidden');
-                } else {
-                    nav.classList.remove('hidden');
-                }
-
-                lastScrollY = currentScrollY;
-            });
-        });
-
-        function navigateScreen(screenId) {
+        // Section Navigation
+        function switchSection(sectionId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId + 'Screen').classList.add('active');
+            document.getElementById(sectionId).classList.add('active');
+            
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.querySelector(`[onclick="navigateScreen('${screenId}')"]`).classList.add('active');
+            event.target.closest('.nav-item').classList.add('active');
+
+            document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
+            document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
         }
 
-        function showSheet(type) {
-            document.getElementById(type + 'Sheet').classList.add('active');
-        }
-
-        function closeSheet(type) {
-            document.getElementById(type + 'Sheet').classList.remove('active');
-        }
-
-        let currentStep = 1;
-
-        function nextStep() {
-            if (currentStep < 4) {
-                currentStep++;
-                updateSteps();
-            } else {
-                alert('Journey arranged! A specialist will contact you shortly.');
-                closeSheet('booking');
-                currentStep = 1;
-                updateSteps();
-            }
-        }
-
-        function previousStep() {
-            if (currentStep > 1) {
-                currentStep--;
-                updateSteps();
-            }
-        }
-
-        function updateSteps() {
-            document.querySelectorAll('[data-step]').forEach(el => el.classList.remove('active'));
-            document.querySelector(`[data-step="${currentStep}"]`).classList.add('active');
-            document.querySelectorAll('.step-dot').forEach((dot, i) => {
-                dot.classList.toggle('active', i + 1 <= currentStep);
-            });
-            document.getElementById('prevBtn').style.display = currentStep > 1 ? 'block' : 'none';
-            document.getElementById('nextBtn').textContent = currentStep === 4 ? 'Confirm' : 'Next';
-        }
-
-        function selectExpert(name) {
-            alert(`Selected: ${name}`);
-        }
-
-        function handleAIAction(action) {
-            if (action === 'booking') {
-                closeSheet('ai');
-                showSheet('booking');
-            } else if (action === 'professionals') {
-                closeSheet('ai');
-                navigateScreen('circle');
-            } else if (action === 'pricing') {
-                alert('Pricing: City (100-110 per hour) | Highway (115-150 per hour) | Specialists (120-125 per hour)');
-            } else if (action === 'safety') {
-                alert('All specialists are verified with identity and license checks. Real-time tracking and 24/7 emergency support available.');
-            }
-        }
-
-        document.querySelectorAll('.bottom-sheet').forEach(sheet => {
-            sheet.addEventListener('click', (e) => {
-                if (e.target === sheet) {
-                    sheet.classList.remove('active');
-                }
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const section = btn.dataset.section;
+                switchSection(section);
             });
         });
 
-        updateSteps();
+        // Booking Modal
+        let bookingStep = 1;
+
+        function openBooking() {
+            document.getElementById('bookingModal').classList.add('active');
+            bookingStep = 1;
+            updateBookingStep();
+        }
+
+        function closeBooking() {
+            document.getElementById('bookingModal').classList.remove('active');
+        }
+
+        function nextBookingStep() {
+            if (bookingStep < 4) {
+                bookingStep++;
+                updateBookingStep();
+            } else {
+                alert('Booking confirmed! Check your email for details.');
+                closeBooking();
+            }
+        }
+
+        function previousBookingStep() {
+            if (bookingStep > 1) {
+                bookingStep--;
+                updateBookingStep();
+            }
+        }
+
+        function updateBookingStep() {
+            document.querySelectorAll('.booking-step').forEach(s => s.style.display = 'none');
+            document.getElementById(`bookingStep${bookingStep}`).style.display = 'block';
+
+            document.querySelectorAll('.progress-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i < bookingStep);
+            });
+
+            document.getElementById('prevBtn').style.display = bookingStep > 1 ? 'block' : 'none';
+            document.getElementById('nextBtn').textContent = bookingStep === 4 ? 'Confirm Booking' : 'Next';
+        }
+
+        function selectSpecialist(name) {
+            alert(`Selected: ${name}`);
+            nextBookingStep();
+        }
+
+        // Care Guide Modal
+        function openCareGuide() {
+            document.getElementById('careGuideModal').classList.add('active');
+            renderBookingSpecialists();
+        }
+
+        function closeCareGuide() {
+            document.getElementById('careGuideModal').classList.remove('active');
+        }
+
+        function sendCareGuideMessage(action) {
+            const input = document.getElementById('careGuideInput');
+            const message = action ? getMessageForAction(action) : input.value;
+            
+            if (!message) return;
+
+            const messagesContainer = document.getElementById('chatMessages');
+            
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.style.cssText = 'background: linear-gradient(135deg, var(--gold-primary), var(--gold-light)); color: var(--dark-base); padding: 12px 16px; border-radius: 12px; margin-bottom: 12px; text-align: right;';
+            userMsg.textContent = message;
+            messagesContainer.appendChild(userMsg);
+
+            input.value = '';
+            
+            // Simulate response
+            setTimeout(() => {
+                const assistantMsg = document.createElement('div');
+                assistantMsg.style.cssText = 'background: rgba(212, 165, 116, 0.1); padding: 12px 16px; border-radius: 12px; margin-bottom: 12px;';
+                assistantMsg.innerHTML = `<p style="font-size: 14px; line-height: 1.5; margin: 0;">${getResponseForMessage(message)}</p>`;
+                messagesContainer.appendChild(assistantMsg);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                
+                if (action) {
+                    document.getElementById('quickActions').style.display = 'none';
+                }
+            }, 600);
+
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function getMessageForAction(action) {
+            const messages = {
+                arrange: 'How do I arrange a ride?',
+                circle: 'Tell me about your trusted specialists.',
+                pricing: 'What are your pricing rates?',
+                safety: 'How do you ensure safety?'
+            };
+            return messages[action] || '';
+        }
+
+        function getResponseForMessage(msg) {
+            const responses = {
+                'arrange': 'Arranging a ride is simple! Click "Arrange Your Care" to open our booking flow. You\'ll need to provide your pickup location, destination, preferred date and time, vehicle type, and select a specialist. The entire process takes less than 2 minutes.',
+                'circle': 'Our Trusted Circle consists of verified professionals with extensive experience. All specialists undergo thorough background checks and have ratings of 4.7+ stars. We have specialists for city commutes, highway travel, night journeys, and corporate travel.',
+                'pricing': 'Our pricing is transparent and competitive. City commutes typically start at ₹100-110 per hour, while highway specialists range from ₹115-150 per hour. Round trips and full-day services are available at custom rates based on your needs.',
+                'safety': 'Safety is our top priority. All specialists are verified with identity and license checks. Every journey is tracked in real-time with GPS, and we offer 24/7 emergency support. We maintain a 99.8% satisfaction rate and 100% verification status.'
+            };
+            
+            for (const [key, value] of Object.entries(responses)) {
+                if (msg.toLowerCase().includes(key.split(' ')[0])) {
+                    return value;
+                }
+            }
+            
+            return 'Thank you for your question! I\'m here to help. Feel free to ask me about booking, our specialists, pricing, or safety.';
+        }
+
+        // Profile Form
+        function handleProfileSubmit(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+
+            if (!name) {
+                alert('Please enter your full name');
+                return;
+            }
+            if (!email || !email.includes('@')) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            if (!phone || phone.length < 10) {
+                alert('Please enter a valid phone number');
+                return;
+            }
+
+            const successMsg = document.getElementById('successMsg');
+            successMsg.style.display = 'block';
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 3000);
+        }
+
+        // Initialize
+        renderSpecialists();
+        renderServices();
+        renderBookingSpecialists();
+
+        // Close modals on backdrop click
+        document.getElementById('bookingModal').addEventListener('click', (e) => {
+            if (e.target.id === 'bookingModal') closeBooking();
+        });
+
+        document.getElementById('careGuideModal').addEventListener('click', (e) => {
+            if (e.target.id === 'careGuideModal') closeCareGuide();
+        });
     </script>
 </body>
 </html>
